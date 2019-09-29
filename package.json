@@ -1,0 +1,51 @@
+{
+    "name": "SNStudy",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "babel-eslint": "^10.0.2",
+        "babel-loader": "^8.0.6",
+        "emoji-mart": "^2.11.1",
+        "firebase": "^6.4.0",
+        "js-hash-code": "^1.0.0",
+        "md5": "^2.2.1",
+        "moment": "^2.24.0",
+        "moment-with-locales-es6": "^1.0.1",
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0",
+        "react-redux": "^7.1.0",
+        "react-router-dom": "^5.0.1",
+        "react-scripts": "3.1.1",
+        "redux": "^4.0.4",
+        "redux-devtools-extension": "^2.13.8",
+        "semantic-ui-react": "^0.87.3",
+        "uuid": "^3.3.3",
+        "uuidv4": "^5.0.1",
+        "webpack": "^4.39.1",
+        "webpack-dev-server": "^3.2.1"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "moment-locales-webpack-plugin": "^1.1.0"
+    }
+}
