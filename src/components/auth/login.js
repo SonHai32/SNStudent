@@ -78,18 +78,7 @@ class Login extends React.Component{
           })
     }
 
-    // displayAuthError = error =>(
-    //     <TransitionablePortal  
-    //                 open
-    //                 className='display__err'
-    //             >
-    //                 <Segment>
-    //                     <Header as='h3'> Open Portal</Header>
-    //                 </Segment>
-    
-    //             </TransitionablePortal>
-    // )
-    
+
 
     displayAuthError = error =>{
         if(error.length > 0){

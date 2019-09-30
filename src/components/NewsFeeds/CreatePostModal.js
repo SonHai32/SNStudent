@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Header,Form,Image, Button, Input, TextArea } from 'semantic-ui-react';
+import { Modal, Header,Form,Image, Button, Input, TextArea, Segment, Grid } from 'semantic-ui-react';
 import {Picker,emojiIndex} from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import uuid from 'uuidv4'
@@ -26,6 +26,7 @@ class CreatePostModal extends React.Component{
         uploadPercent: 0,
         storeRef: firebase.storage().ref(),
         postsRef: firebase.database().ref('posts'),
+        files:[]
       
         
     }
@@ -41,7 +42,7 @@ class CreatePostModal extends React.Component{
     }
 
     handleEmojiSelect = emoji =>{
-        
+        console.log(emoji)
         const oldPost = this.state.postText;
         const newPost = this.addEmojiToInputWithSeletionStart(oldPost,this.state.selectionStart,this.colonToUnicode(emoji.colons));
         this.setState({postText: newPost})
@@ -101,62 +102,102 @@ closeFileModal = () =>{
     this.setState({fileModal: false})
 }
 
-uploadFile = (file,metadata) =>{
-    const filePath = this.props.user.uid+'/media/image/'+uuid()+'.jpg';
-    const uploadTask = this.state.storeRef.child(filePath).put(file,metadata);
-    this.setState({uploadTask},()=>{
-        this.state.uploadTask.on('state_changed', snap =>{
-            const uploadPercent = Math.round((snap.bytesTransferred / snap.totalBytes)*100) 
-            this.setState({uploadPercent},()=>{
-                if(this.state.uploadPercent == 100){
-                    setTimeout(()=>{
-                        this.state.uploadTask.snapshot.ref.getDownloadURL().then(downloadURL =>{
-                            const image = [];
-                            image.push({downloadURL: downloadURL, imagePath: this.state.uploadTask.location_.path})
-                            this.setState({postImages: this.state.postImages.concat(image)},()=>{
-                                console.log(this.state.postImages)
-                            })
-                        })
-                    },800 - this.state.uploadPercent)
-                }
+fileStateToProp = files =>{
+   
+    this.setState({files: this.state.files.concat(files)})
+    console.log(this.state.files)
+}
+
+uploadFile = () =>{
+    
+    if(this.state.files.length > 0){
+        this.state.files.forEach(file =>{
+            const filePath = this.props.user.uid+'/media/image/'+uuid()+'.jpg'; 
+            const uploadTask = this.state.storeRef.child(filePath).put(file.file,file.metadata)
+            this.setState({uploadTask}, () =>{
+                this.state.uploadTask.on('state_changed', snap =>{
+                    const uploadPercent = Math.round((snap.bytesTransferred / snap.totalBytes) * 100)
+                    this.setState({uploadPercent}, () =>{
+                        console.log(this.state.uploadPercent)
+                    })
+                })
             })
-        });
+        })
+    }
+    // const uploadTask = this.state.storeRef.child(filePath).put(file,metadata);
+    // this.setState({uploadTask},()=>{
+    //     this.state.uploadTask.on('state_changed', snap =>{
+    //         const uploadPercent = Math.round((snap.bytesTransferred / snap.totalBytes)*100) 
+    //         this.setState({uploadPercent},()=>{
+    //             if(this.state.uploadPercent == 100){
+    //                 setTimeout(()=>{
+    //                     this.state.uploadTask.snapshot.ref.getDownloadURL().then(downloadURL =>{
+    //                         const image = [];
+    //                         image.push({downloadURL: downloadURL, imagePath: this.state.uploadTask.location_.path})
+    //                         this.setState({postImages: this.state.postImages.concat(image)},()=>{
+    //                             console.log(this.state.postImages)
+    //                         })
+    //                     })
+    //                 },800 - this.state.uploadPercent)
+    //             }
+    //         })
+    //     });
         
-    })
+    // })
     
     
 }
 
+
+
 savePost = event =>{
     event.preventDefault();
-    const postChild = this.props.user.uid+uuid()+'/post';
-    const postCreate ={
-      postChild: postChild,
-      createByUid: this.props.user.uid,
-      createByName: this.props.user.displayName,
-      avatar: this.props.user.photoURL ,
-      timestamp: Date.now(),
-      postImages: Array().concat(this.state.postImages),
-      postText: this.state.postText,
-      liked: [{username: 'null', userUID: 'null'}]
-    }
+    // const postChild = this.props.user.uid+uuid()+'/post';
+    // const postCreate ={
+    //   postChild: postChild,
+    //   createByUid: this.props.user.uid,
+    //   createByName: this.props.user.displayName,
+    //   avatar: this.props.user.photoURL ,
+    //   timestamp: Date.now(),
+    //   postImages: Array().concat(this.state.postImages),
+    //   postText: this.state.postText,
+    //   liked: [{username: 'null', userUID: 'null'}]
+    // }
     
-    this.state.postsRef.child(postChild).set(postCreate).then(()=>{
-        this.setState({postText: '', postImages: []});
-        this.props.closeModal()
-    })
+    // this.state.postsRef.child(postChild).set(postCreate).then(()=>{
+    //     this.setState({postText: '', postImages: []});
+    //     this.props.closeModal()
+    // })
+    this.uploadFile()
     
+  }
+
+  displayImages = files =>{
+        
+          return(
+              <Grid columns={6}>
+                  <Grid.Row > 
+{files.map((val,key) =>(
+    <Grid.Column  >
+        <Image style={{width:'100px', height: '100px', objectFit:'cover'}} key={key} src={val.url} />
+        
+    </Grid.Column>
+))}
+                  </Grid.Row>
+              </Grid>
+          )
+      
   }
 
 
     render(){
 
-        const {postText,emojiPicker} = this.state;
+        const {postText,emojiPicker,files} = this.state;
         const {user,modal,closeModal} = this.props;
         
         return(
             <div className="wrapper">
-                <FileModal fileModal={this.state.fileModal} uploadFile={this.uploadFile} closeModal={this.closeFileModal} />
+                <FileModal files={this.state.files} fileStateToProp={this.fileStateToProp} fileModal={this.state.fileModal} uploadFile={this.uploadFile} closeModal={this.closeFileModal} />
 
                 <Modal centered size='small' open={modal} onClose={closeModal} closeIcon style={{top: '10%', transform: 'translateY(-10%)'}}>
                 <Modal.Header >
@@ -238,8 +279,17 @@ savePost = event =>{
 
 
                         <Form.Button onClick={this.savePost}  color='green' fluid style={{marginTop: '50px'}}>Đăng bài</Form.Button>
-
+                                
                     </Form> 
+                   
+                    {files.length > 0 ?  (
+                        <Segment>  
+                            {
+                                this.displayImages(files)
+                            }
+                            
+                        </Segment>
+                    ): ''}
                 </Modal.Content>
             </Modal>
             </div>

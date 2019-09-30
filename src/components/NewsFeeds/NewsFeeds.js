@@ -260,7 +260,7 @@ class NewsFeeds extends React.Component{
         <Header as='h3' block style={{background :'#F9FCFA'}}> 
         
           <Header.Content style={{opacity: 0.6}}> <Image spaced='right' style={{width:'30px'} } src={editIcon} />Tạo Bài Viết  </Header.Content>
-        
+         
         </Header>
         
           {this.displayImagePost(this.state)}
@@ -399,7 +399,7 @@ class NewsFeeds extends React.Component{
             <Button.Group fluid size='small' compact >
             <Button  name={val.postChild} onClick={this.handleLikeClicked} basic compact >
             
-                <Icon name='thumbs up'  color={val.liked.some(val=>{return val.userUID === user.uid}) ? 'blue' :''} /> Like
+                <Icon name='thumbs up'  color={val.liked.some(val=>{return val.userUID === user.uid}) ? 'blue' :'grey'} /> Like
               </Button>
               <Button basic compact >
                 <Icon name='comment outline' /> Comment

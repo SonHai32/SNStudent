@@ -1,44 +1,67 @@
 import React from 'react'
-import { Modal, Input, Button, Icon } from 'semantic-ui-react';
+import { Modal, Input, Button, Icon,Image } from 'semantic-ui-react';
 
 class FileModal extends React.Component{
     state = {
-        file: null,
-        authorized: ['image/jpeg', 'image/png', 'image/webp']
+        authorized: ['image/jpeg', 'image/png', 'image/webp'],
+        currentFiles: []
+
     }
 
+   
     addFile = event =>{
-        const file = event.target.files[0];
-        if(file){
-            this.setState({file})
-        }
-    }
-
-    sendFile = () =>{
-        const {file} = this.state;
-        const {uploadFile, closeModal} = this.props
-
-        if(file){
-            if(this.isAuthorized(file.type)){
-                //send File
-                const metadata = {contentType: file.type}
-                uploadFile(file, metadata);
-                closeModal();
-                this.clearFile();
+    
+        
+        const files = event.target.files;
+        
+        
+   
+        if(files){
+            for(let i = 0 ; i < files.length ; i++){
+                const metadata = {contentType: files[i].type}
+                const reader = new FileReader();
+                if(this.isAuthorized(files[i].type)){
+                    reader.onload = event =>{
+                        const file = {file: files[i], url: event.target.result, metadata: metadata} 
+                        this.state.currentFiles.push(file)
+                    }
+                    reader.readAsDataURL(files[i])
+                }
             }
         }
+    }
+    
+
+
+  
+
+    sendFileToProp = () =>{
+      
+     const {fileStateToProp,closeModal} = this.props
+         fileStateToProp(this.state.currentFiles);
+         this.clearFile();
+         closeModal();
 
     }
 
-    clearFile = () => {
-        this.setState({file: null})
+    clearFile = () =>{
+        this.setState({currentFiles: []})
     }
 
+    handleCancel = () =>{
+        const {closeModal} = this.props;
+        this.clearFile();
+        closeModal();
+        
+    }
+  
+   
     isAuthorized = fileType => this.state.authorized.includes(fileType);
 
     render(){
 
         const {fileModal, closeModal} = this.props;
+     
 
        return(
             <Modal basic open={fileModal} onClose={closeModal}>
@@ -47,6 +70,7 @@ class FileModal extends React.Component{
                 </Modal.Header>
                 <Modal.Content>
                     <Input 
+                        multiple
                         fluid
                         label='File types: jpg, png'
                         name='file'
@@ -61,10 +85,11 @@ class FileModal extends React.Component{
                             <Icon name='remove' /> Cancel
                         </Button>
                         <Button.Or />
-                        <Button onClick={this.sendFile} inverted positive>
-                            <Icon name='checkmark' />Upload
+                        <Button onClick={this.sendFileToProp} inverted positive>
+                            <Icon className='submit' name='checkmark' />Upload
                         </Button>
                     </Button.Group>
+                  
                     
                 </Modal.Actions>
             </Modal>
