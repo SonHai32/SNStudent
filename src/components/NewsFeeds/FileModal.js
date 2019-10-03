@@ -1,4 +1,5 @@
 import React from 'react'
+import uuid from 'uuidv4'
 import { Modal, Input, Button, Icon } from 'semantic-ui-react';
 import DisplayError from '../Error/DisplayError'
 
@@ -41,7 +42,7 @@ class FileModal extends React.Component{
                             
                             if(files[i].size <= 3355443){
                                 reader.onload = event =>{
-                                    const file = {file: files[i], url: event.target.result, metadata: metadata, key:files[i].name} 
+                                    const file = {file: files[i], url: event.target.result, metadata: metadata, key:uuid()} 
                                     this.state.currentFiles.push(file)
                                 }
                                 
