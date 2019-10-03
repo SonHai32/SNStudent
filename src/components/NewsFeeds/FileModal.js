@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, Input, Button, Icon } from 'semantic-ui-react';
-import { file } from '@babel/types';
+
 
 class FileModal extends React.Component{
     state = {

@@ -6,7 +6,7 @@ import uuid from 'uuidv4'
 
 import firebase from '../../firebase'
 import FileModal from './FileModal'
-import  ImageResizer from'../test'
+import  ImageResizer from'../ImageResize'
 // import ImageResize from '../ImageResize'
 import pictureIcon from '../../Images/picture.svg'
 import tagFriends from '../../Images/tagfriends.svg'
