@@ -1,5 +1,6 @@
 import React from 'react'
-import { Modal, Input, Button, Icon,Image } from 'semantic-ui-react';
+import { Modal, Input, Button, Icon } from 'semantic-ui-react';
+import { file } from '@babel/types';
 
 class FileModal extends React.Component{
     state = {
@@ -17,15 +18,17 @@ class FileModal extends React.Component{
         
    
         if(files){
-            for(let i = 0 ; i < files.length ; i++){
-                const metadata = {contentType: files[i].type}
-                const reader = new FileReader();
-                if(this.isAuthorized(files[i].type)){
-                    reader.onload = event =>{
-                        const file = {file: files[i], url: event.target.result, metadata: metadata} 
-                        this.state.currentFiles.push(file)
+            if(files.length <= 20 ){
+                for(let i = 0 ; i < files.length ; i++){
+                    const metadata = {contentType: files[i].type}
+                    const reader = new FileReader();
+                    if(this.isAuthorized(files[i].type)){
+                        reader.onload = event =>{
+                            const file = {file: files[i], url: event.target.result, metadata: metadata, key:i} 
+                            this.state.currentFiles.push(file)
+                        }
+                        reader.readAsDataURL(files[i])
                     }
-                    reader.readAsDataURL(files[i])
                 }
             }
         }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Image, Header,Button} from 'semantic-ui-react'
+import { Menu, Image} from 'semantic-ui-react'
 import firebase from '../../firebase'
 import newsfeedIcon from '../../Images/newsfeed.svg'
 import flagIcon from '../../Images/flag.svg'

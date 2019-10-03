@@ -1,18 +1,19 @@
 import React from 'react'
-import { Modal, Header,Form,Image, Button, Input, TextArea, Segment, Grid } from 'semantic-ui-react';
+import { Modal, Header,Form,Image, Button, TextArea, Icon } from 'semantic-ui-react';
 import {Picker,emojiIndex} from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import uuid from 'uuidv4'
 
 import firebase from '../../firebase'
 import FileModal from './FileModal'
-
-
+import  ImageResizer from'../test'
+// import ImageResize from '../ImageResize'
 import pictureIcon from '../../Images/picture.svg'
 import tagFriends from '../../Images/tagfriends.svg'
-import locationIcon from '../../Images/location.svg'
+
 import editIcon from '../../Images/edit.svg'
 import smileIcon from '../../Images/smile.svg'
+
 
 class CreatePostModal extends React.Component{
 
@@ -26,7 +27,10 @@ class CreatePostModal extends React.Component{
         uploadPercent: 0,
         storeRef: firebase.storage().ref(),
         postsRef: firebase.database().ref('posts'),
-        files:[]
+        files:[], 
+        fileLoading: false,
+        imageResize: [],
+        imageDisplay: 0,
       
         
     }
@@ -42,8 +46,8 @@ class CreatePostModal extends React.Component{
     }
 
     handleEmojiSelect = emoji =>{
-        console.log(emoji)
-        const oldPost = this.state.postText;
+        
+        let oldPost = this.state.postText;   
         const newPost = this.addEmojiToInputWithSeletionStart(oldPost,this.state.selectionStart,this.colonToUnicode(emoji.colons));
         this.setState({postText: newPost})
     
@@ -68,16 +72,23 @@ class CreatePostModal extends React.Component{
 
 addEmojiToInputWithSeletionStart = (post, selectionStart,emoji) =>{
  
-    if(post){
+    if(post !== ''){
         if(emoji){
-            
-            return post.substring(0,selectionStart) +emoji+ post.substring(selectionStart,post.length)
+            if(selectionStart ===0 ){
+                return  post + emoji
+            }else{
+                let oldSelectionStart = selectionStart
+                this.setState({selectionStart: selectionStart + emoji.length})
+                return post.substring(0,oldSelectionStart) +emoji + post.substring(oldSelectionStart,post.length)
+            }
+    
+          
         }else{
             return post
         }
     }else{
         if(emoji){
-            return post + emoji
+            return post  +emoji
         }
     }
 }
@@ -104,8 +115,11 @@ closeFileModal = () =>{
 
 fileStateToProp = files =>{
    
-    this.setState({files: this.state.files.concat(files)})
-    console.log(this.state.files)
+    this.setState({files: this.state.files.concat(files)},()=>{
+        this.displayImage(this.state.files)
+    })
+    
+
 }
 
 uploadFile = () =>{
@@ -172,22 +186,68 @@ savePost = event =>{
     
   }
 
-  displayImages = files =>{
+
+
+
+displayImage = async (images) =>{
+
+    let container = document.getElementById('image-upload-limit-container');
+    let imageUploadCounter = () =>{
+        return container.getElementsByTagName('img').length
+    }
+
+    let count = await imageUploadCounter();
+
+     this.getImagesResized = await new Promise((resolve,reject)=>{
+        for(let i = count ; i < images.length; i++){
+             this.resizing = new Promise((resolve,reject)=>{
+                ImageResizer(images[i].url, 120 , newImage => {
+                    resolve(newImage)
+                })
+            })
+            .then(result => {
+                let div = document.createElement('div');
+                div.setAttribute('class','image-uploaded-container')
+                div.setAttribute('id',`image-${images[i].key}-uploaded`)
+                let img = document.createElement('img');
+                img.setAttribute('class','image-uploaded-display');
+                img.setAttribute('src',result)
+                img.setAttribute('key',images[i].key)
+                let iconRemove = document.createElement('i');
+                iconRemove.setAttribute('title',"Xóa ảnh")
+                iconRemove.setAttribute('aria-hidden',"true")
+                iconRemove.setAttribute('class',"remove large icon")
+                iconRemove.setAttribute('id','icon-remove-image')
+                iconRemove.setAttribute('key',images[i].key)
+                iconRemove.onclick = (event) =>{this.removeImageUpload(event.target.getAttribute('key'))}
+                div.appendChild(img);
+                div.appendChild(iconRemove)
+                
+                container.appendChild(div)
+            })
+        }
+       resolve('done')
+    }
+
+
+    
+    )
+
+    
+}
+
+removeImageUpload = key =>{
+   
+
+    document.getElementById(`image-${key}-uploaded`).remove()
+    this.setState({files: this.state.files.filter((val,index,arr)=>{
+        return parseInt(val.key) !== parseInt(key)
+    })},()=>console.log(this.state.files.length))
         
-          return(
-              <Grid columns={6}>
-                  <Grid.Row > 
-{files.map((val,key) =>(
-    <Grid.Column  >
-        <Image style={{width:'100px', height: '100px', objectFit:'cover'}} key={key} src={val.url} />
-        
-    </Grid.Column>
-))}
-                  </Grid.Row>
-              </Grid>
-          )
-      
-  }
+
+}
+
+
 
 
     render(){
@@ -197,9 +257,10 @@ savePost = event =>{
         
         return(
             <div className="wrapper">
+                
                 <FileModal files={this.state.files} fileStateToProp={this.fileStateToProp} fileModal={this.state.fileModal} uploadFile={this.uploadFile} closeModal={this.closeFileModal} />
 
-                <Modal centered size='small' open={modal} onClose={closeModal} closeIcon style={{top: '10%', transform: 'translateY(-10%)'}}>
+                <Modal centered  open={modal} onClose={closeModal} closeIcon style={{top: '10%', transform: 'translateY(-10%)',maxWidth: '1000px'}}>
                 <Modal.Header >
                 <Header as='h3'> 
         
@@ -221,7 +282,7 @@ savePost = event =>{
                                     value={postText} 
                                     type='text' 
                                     placeholder="Bạn muốn chia sẻ điều gì ?" 
-                                    transparent 
+                                    transparent='true'
                                     onClick={this.inputClicked}
                                     onChange={this.handlePostChange} 
                                     style={{height: '100%',fontSize: 16,float: 'left',border: 'none', background: 'none', resize: 'none'}} 
@@ -266,7 +327,7 @@ savePost = event =>{
                                             onSelect={this.handleEmojiSelect}
                                             set='facebook'
                                             emoji='point_up'
-                                            style={{position: "absolute",left:'55%', top:'65%'}}
+                                            style={{position: "absolute",left:'55%', top:'65%', zIndex: '1000'}}
                                     
                                         />
                                     </div>
@@ -281,14 +342,22 @@ savePost = event =>{
                         <Form.Button onClick={this.savePost}  color='green' fluid style={{marginTop: '50px'}}>Đăng bài</Form.Button>
                                 
                     </Form> 
-                   
+                    
                     {files.length > 0 ?  (
-                        <Segment>  
-                            {
-                                this.displayImages(files)
-                            }
-                            
-                        </Segment>
+                       
+                         <div  id='image-upload-limit-container'>
+                             
+
+                             <div>
+                             <div className='add-image-box' title='Thêm ảnh' onClick={this.openFileModal}  >
+                             
+                                                 <Icon  size='large' name='plus' className='icon-remove-image'  color='black' style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',cursor: 'pointer'}} />
+                                             </div>
+                             </div>{
+                                 
+                             }
+                         </div>
+                        
                     ): ''}
                 </Modal.Content>
             </Modal>

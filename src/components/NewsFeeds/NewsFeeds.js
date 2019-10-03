@@ -1,5 +1,5 @@
 import React from 'react'
-import {Segment,Header,Icon, Feed,Image, Divider, Form, TextArea, Button, List, Responsive, Dropdown, Container, Loader, Dimmer, Label, Input} from 'semantic-ui-react'
+import {Segment,Header,Icon, Feed,Image, Divider,  Button, List, Dropdown, Container, Loader, Dimmer} from 'semantic-ui-react'
 import uuid from 'uuidv4'
 import firebase from '../../firebase'
 import FileModal from './FileModal'
@@ -22,7 +22,6 @@ class NewsFeeds extends React.Component{
       fileModal: false,
       imageModalStatus: false,
       imageModalURL: '',
-      postModal: false,
       imagePost: [],
       postCreate: [],
       postModal: false,
@@ -226,7 +225,7 @@ class NewsFeeds extends React.Component{
         this.deleteImageFromStorge(this.state.imagePost[removeIndex].imagePath)
 
         const newImagePost = this.state.imagePost.filter((value,index,arr) =>{
-          return index != removeIndex
+          return index !== removeIndex
         })
         
 
@@ -238,7 +237,7 @@ class NewsFeeds extends React.Component{
     
 
     render(){
-        const {user,post,postFromDatabase} = this.state;
+        const {user,postFromDatabase} = this.state;
        
 
         return(
