@@ -7,7 +7,7 @@ import uuid from 'uuidv4'
 import firebase from '../../firebase'
 import FileModal from './FileModal'
 import  ImageResizer from'../ImageResize'
-// import ImageResize from '../ImageResize'
+
 import pictureIcon from '../../Images/picture.svg'
 import tagFriends from '../../Images/tagfriends.svg'
 
@@ -241,7 +241,7 @@ removeImageUpload = key =>{
 
     document.getElementById(`image-${key}-uploaded`).remove()
     this.setState({files: this.state.files.filter((val,index,arr)=>{
-        return parseInt(val.key) !== parseInt(key)
+        return val.key !== key
     })},()=>console.log(this.state.files.length))
         
 
