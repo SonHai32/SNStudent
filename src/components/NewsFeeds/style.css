@@ -1,0 +1,55 @@
+/* Images Component CSS */
+
+.container {
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
+
+.image-slider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.height-one {
+    width: 100%;
+    padding-top: 100%;
+}
+
+.height-two {
+    padding-top: 60%;
+}
+
+.height-three-bottom {
+    padding-top: 50%;
+}
+
+.border {
+    border: 3px solid white;
+    border-radius: 6px
+}
+
+.arrow-right {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(-100%, -50%);
+    opacity: 0;
+}
+
+.arrow-left {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(0%, -50%);
+    opacity: 0;
+}
+
+.container:hover .arrow-right {
+    opacity: 1;
+}
+
+.container:hover .arrow-left {
+    opacity: 1;
+}

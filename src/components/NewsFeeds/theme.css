@@ -1,0 +1,16 @@
+.container {
+    background-color: #000;
+    overflow: hidden;
+    position: relative;
+}
+
+.image-swiper {
+    display: flex;
+    overflow-x: visible;
+    transition-property: tranform;
+    will-change: transform;
+}
+
+img {
+    object-fit: contain
+}

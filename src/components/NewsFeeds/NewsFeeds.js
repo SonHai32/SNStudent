@@ -1,13 +1,16 @@
 import React from 'react'
 import {Segment,Header,Icon, Feed,Image, Divider,  Button, List, Dropdown, Container, Loader, Dimmer} from 'semantic-ui-react'
+import { Gallery, GalleryImage } from "react-gesture-gallery";
 import uuid from 'uuidv4'
 import firebase from '../../firebase'
 import FileModal from './FileModal'
 import ImageModal from './ImageModal'
 import * as moment from 'moment'
-import hash from 'js-hash-code'
 import editIcon from '../../Images/edit.svg'
 import CreatePostModal from './CreatePostModal'
+import DisplayError from '../Error/DisplayError'
+import DisplayImageNewsFeed from './DisplayImageNewsFeed'
+import ImageSwiper from './ImageSwiper'
 
 
 
@@ -253,6 +256,11 @@ class NewsFeeds extends React.Component{
           closeModal={this.closePostModal}
           user={user}
           />
+          <ImageModal 
+                         
+                         imageModal={this.state.imageModalStatus} 
+                         closeModal={this.closeImageModal}
+                         imageURL={this.state.imageModalURL} />
         
     <Segment stacked>
     
@@ -281,24 +289,6 @@ class NewsFeeds extends React.Component{
           Tạo bài viết của bạn
         </Button>
 
-      {/* <Button.Group  compact fluid widths={4}  >
-        
-      <Button inverted style={{background: '#6FBE42'}}  onClick={this.openFileModal}  >
-              <Icon name='photo' /> Ảnh/Video
-            </Button>
-            <Button inverted style={{background: '#6FBE42'}}>
-              <Icon name='user plus' /> Tag Friends
-            </Button>
-         
-         
-            <Button inverted style={{background: '#6FBE42'}}>
-              <Icon name='smile outline' /> Cảm Xúc
-            </Button>
-          
-            <Button inverted style={{background: '#6FBE42'}}>
-              <Icon name='list' /> Khác
-             </Button>
-      </Button.Group> */}
      
   
       {this.state.post.length > 0 || this.state.imagePost.length >0 ? <Button onClick={this.savePost} fluid style={{marginTop: '20px',background:'#ecf7e7'}}>
@@ -312,9 +302,9 @@ class NewsFeeds extends React.Component{
       {postFromDatabase.length > 0 ? (
         postFromDatabase.map((val, key) =>(
           
-          <Segment  >
+          <Segment style={{padding: 0}}  >
       
-          <Feed size='large'>
+          <Feed size='large' style={{padding: '10px 10px'}}>
               <Feed.Event>
               <Feed.Label image ={val.avatar} />
               <Feed.Content>
@@ -340,7 +330,6 @@ class NewsFeeds extends React.Component{
                 </Feed.Summary>
                 <Feed.Summary>
                   <i style={{opacity: 0.5, fontSize: 14}} className="fas fa-globe-asia"></i> 
-               
                 </Feed.Summary>
 
                 
@@ -356,28 +345,22 @@ class NewsFeeds extends React.Component{
           
           <Feed.Event>
             <Feed.Content >
-              <Container fluid text textAlign='justified' content={val.postText}>
-
+              <Container fluid text style={{padding: '10px 10px'}} textAlign='justified' content={val.postText}>
+              
               </Container>
               {val.postImages ? (
-                val.postImages.map((value,key) =>(        
-                    <List key={val.createByUid+val.timestamp+uuid()+hash(value.downloadURL)} horizontal  >
-                      <List.Item key={'list'+val.createByUid+val.timestamp+uuid()+hash(value.downloadURL)}   as='a'  >
+                // val.postImages.map((value,key) =>(        
+                    
                        
-                       
-                          <Image centered fluid key={'image'+val.createByUid+val.timestamp+uuid()+hash(value.downloadURL)} src={value.downloadURL} name={value.downloadURL} onClick={this.openImageModal} />
-                          {/* <img style={{padding: '10px 10px'}} src={value.downloadURL} name={value.downloadURL} onClick={this.openImageModal} />
-                     */}
-                        <ImageModal 
-                         
-                          imageModal={this.state.imageModalStatus} 
-                          closeModal={this.closeImageModal}
-                          imageURL={this.state.imageModalURL} />
-                      </List.Item>
-                    </List>
+                //           <Image centered size src={value} name={value} onClick={this.openImageModal} />
+                          
+                        
+                     
                     
                 
-                ))
+                // ))
+                // <DisplayImageNewsFeed a={`post${uuid()}`} count={0} images ={val.postImages} />
+                <ImageSwiper images={val.postImages} />                
               ) : ''}
                
              
@@ -395,9 +378,8 @@ class NewsFeeds extends React.Component{
           </Container>
          
           <Divider />
-            <Button.Group fluid size='small' compact >
-            <Button  name={val.postChild} onClick={this.handleLikeClicked} basic compact >
-            
+            <Button.Group fluid size='small' compact style={{padding: '10px 10px'}} >
+            <Button  name={val.postChild} onClick={this.handleLikeClicked} basic compact >  
                 <Icon name='thumbs up'  color={val.liked.some(val=>{return val.userUID === user.uid}) ? 'blue' :'grey'} /> Like
               </Button>
               <Button basic compact >
@@ -407,7 +389,7 @@ class NewsFeeds extends React.Component{
                 <Icon name='share' /> Share 
               </Button>
             </Button.Group>
-            <Divider />
+           
                      
          
         
@@ -416,7 +398,7 @@ class NewsFeeds extends React.Component{
         ))
       ) :  ''}
 
-     
+     <DisplayError />
 
  
 

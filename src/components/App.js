@@ -6,20 +6,19 @@ import HeaderPanel from './Header/header'
 import SidePanelLeft from './SidePanel/SidePanelLeft'
 import SidePanelRight from './SidePanel/SidePanelRight'
 import NewsFeeds from './NewsFeeds/NewsFeeds'
-
-
+import MainBlog from './NewsFeeds/MainBlog'
+import Post1 from './Post/Post1'
 
 const App = ({currentUser}) =>(
   <Grid style={{background : '#EDEDED'}}>
        
     <HeaderPanel />
     <Responsive minWidth={480}>
-      <SidePanelLeft currentUser={currentUser} />
     </Responsive>
     {/* <SidePanelRight /> */}
     
-      <Grid.Column  style={{width: '35%' ,marginTop: '90px', left: '50%',transform: 'translateX(-50%)'}}>
-      <NewsFeeds currentUser={currentUser} />
+      <Grid.Column  style={{width: '60%' ,marginTop: '90px', left: '50%',transform: 'translateX(-50%)'}}>
+            <Post1 />
       </Grid.Column>
   
     

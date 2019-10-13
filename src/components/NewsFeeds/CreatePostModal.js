@@ -118,7 +118,7 @@ closeFileModal = () =>{
 }
 
 closeErrorModal = () =>{
-    this.setState({errorModal: false})
+    this.setState({errorModal: false},()=>this.setState({errorMessage: ''}));
 }
 
 fileStateToProp = files =>{
@@ -147,25 +147,8 @@ savePost =  async () =>{
            })
        })
 
-       await Promise.all (putFileToStorge).then(images=>this.uploadPostToDatabase(images)).catch(err=>console.log(err))
-   }
-     
-
-    //     let putFileToStorge = (file, filePath, metadata) =>{
-    //          this.state.storeRef.child(filePath).put(file,metadata).then(snapshot=>{ 
-    //         snapshot.ref.getDownloadURL().then(downloadUrl => this.state.postImages.push(downloadUrl))
-    //     })}
-
-
-    //  Promise.all(
-    //         this.state.files.map((file,index) =>{
-    //             const filePath = this.props.user.uid+'/media/image/'+uuid()+'.jpg'; 
-    //              putFileToStorge(file.file,filePath,file.metadata)
-               
-    //         })
-    //     ).then(this.savePost(this.state.postImages)).catch(err=>console.log(err))
-
-   
+       await Promise.all (putFileToStorge).then(images=>this.uploadPostToDatabase(images)).catch(err=>this.setState({errorMessage: err}))
+   }  
     
 }
 
@@ -188,7 +171,7 @@ uploadPostToDatabase = images =>{
     this.state.postsRef.child(postChild).set(postCreate).then(()=>{
         this.setState({postText: '', postImages: []});
         this.props.closeModal()
-    })
+    }).catch(err => this.setState({errorMessage: err}))
     
   }
 
@@ -258,12 +241,12 @@ removeImageUpload = key =>{
 
     render(){
 
-        const {postText,emojiPicker,files} = this.state;
+        const {postText,emojiPicker,files,errorMessage,errorModal} = this.state;
         const {user,modal,closeModal} = this.props;
         
         return(
             <div className="wrapper">
-                <DisplayError errorModal={this.state.errorMessage.length > 0} closeModal={this.closeErrorModal} error={this.state.errorMessage}/>
+                <DisplayError errorModal={errorMessage.length > 0} closeModal={this.closeErrorModal} error={errorMessage}/>
                 <FileModal files={this.state.files} fileStateToProp={this.fileStateToProp} fileModal={this.state.fileModal} uploadFile={this.uploadFile} closeModal={this.closeFileModal} />
 
                 <Modal centered  open={modal} onClose={closeModal} closeIcon style={{top: '10%', transform: 'translateY(-10%)',maxWidth: '1000px'}}>

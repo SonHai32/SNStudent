@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Image} from 'semantic-ui-react'
+import { Menu, Image, Button} from 'semantic-ui-react'
 import firebase from '../../firebase'
 import newsfeedIcon from '../../Images/newsfeed.svg'
 import flagIcon from '../../Images/flag.svg'
@@ -17,15 +17,20 @@ class SidePanelLeft extends React.Component{
               channelRef: firebase.database().ref('Channels'),
               user: this.props.currentUser,
               errors : [],
+              activeItem: 'Bảng tin'
               
                     
   };
 
+itemClicked = (e,{name}) =>{
+  this.setState({activeItem: name})
+}
+
   
     render(){
- 
+        const {activeItem} = this.state
         return(
-         
+          
        
             <Menu   
             className='side-panel-left'
@@ -33,52 +38,70 @@ class SidePanelLeft extends React.Component{
             vertical    
             style={{ background: '#FFFFFF', top: '80px', padding: '30px 0' }}
             size='large'
+            secondary
             >
-            
+           
             
             <Menu.Item 
+            name='Bảng tin'
               as='a'
-              style={{padding: '10px 0'}}
-               
-              active
+              color='green'
+              className="left-panel-menu-btn-hover-scale "
+              active={activeItem=== 'Bảng tin'}
+              onClick={this.itemClicked}
             > 
-              <Image style={{width: '32px', marginLeft: '10px'}} centered spaced='right' src={newsfeedIcon} /> <span style={{marginLeft: '15px', fontWeight: '200'}}>Bảng tin</span>
+              <Image style={{width: '32px', marginLeft: '10px'}} centered spaced='right' src={newsfeedIcon} /> <span style={{marginLeft: '10%', fontWeight: '100'}}>Bảng tin</span>
              
               </Menu.Item>
               <Menu.Item 
               as='a'
-              style={{padding: '10px 0'}}
+              className="left-panel-menu-btn-hover-scale "
+              color='green'
+              name='Trang'
+              active={activeItem === 'Trang'}
+              onClick={this.itemClicked}
               
             
             > 
-              <Image style={{width: '32px', marginLeft: '10px'}} centered spaced='right' src={flagIcon} /> <span style={{marginLeft: '15px', fontWeight: '200'}}>Trang</span>
+              <Image style={{width: '32px', marginLeft: '10px'}} centered spaced='right' src={flagIcon} /> <span style={{marginLeft: '10%', fontWeight: '100'}}>Trang</span>
              
               </Menu.Item>
               <Menu.Item 
               as='a'
-              style={{padding: '10px 0'}}
+              className="left-panel-menu-btn-hover-scale "
+              color='green'
+              name='Nhóm'
+              active={activeItem === 'Nhóm'}
+              onClick={this.itemClicked}
               
             
             > 
-              <Image style={{width: '32px', marginLeft: '10px'}} centered spaced='right' src={groupIcon} /> <span style={{marginLeft: '15px', fontWeight: '200'}}>Nhóm</span>
+              <Image style={{width: '32px', marginLeft: '10px'}} centered spaced='right' src={groupIcon} /> <span style={{marginLeft: '10%', fontWeight: '100'}}>Nhóm</span>
              
               </Menu.Item>
               <Menu.Item 
               as='a'
-              style={{padding: '10px 0'}}
-              
+              className="left-panel-menu-btn-hover-scale "
+              color='green'
+              name ='Tài liệu'
+              active={activeItem === 'Tài liệu'}
+              onClick={this.itemClicked}
             
             > 
-              <Image style={{width: '32px', marginLeft: '10px'}} centered spaced='right' src={noteIcon} /> <span style={{marginLeft: '15px', fontWeight: '200'}}>Tài Liệu</span>
+              <Image style={{width: '32px', marginLeft: '10px'}} centered spaced='right' src={noteIcon} /> <span style={{marginLeft: '10%', fontWeight: '100'}}>Tài Liệu</span>
              
               </Menu.Item>
               <Menu.Item 
               as='a'
-              style={{padding: '10px 0'}}
+              className="left-panel-menu-btn-hover-scale "
+              color='green'
+              name ='Cộng đồng'
+              active={activeItem === 'Cộng đồng'}
+              onClick={this.itemClicked}
               
             
             > 
-              <Image style={{width: '32px', marginLeft: '10px'}} centered spaced='right' src={networkIcon} /> <span style={{marginLeft: '15px', fontWeight: '200'}}>Cộng đồng</span>
+              <Image style={{width: '32px', marginLeft: '10px'}} centered spaced='right' src={networkIcon} /> <span style={{marginLeft: '10%', fontWeight: '100'}}>Cộng đồng</span>
              
               </Menu.Item>
               

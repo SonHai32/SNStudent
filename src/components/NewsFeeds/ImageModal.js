@@ -6,8 +6,8 @@ class ImageModal extends React.Component{
     render(){
         const {imageModal,closeModal,imageURL} = this.props;
         return(
-            <Modal basic  onClose={closeModal} open={imageModal}>
-                <Image   centered rounded fluid src={imageURL} />
+            <Modal basic size='large' closeIcon onClose={closeModal} open={imageModal}>
+                <Image fluid src={imageURL} />
             </Modal>
         )
     }

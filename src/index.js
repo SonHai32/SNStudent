@@ -40,6 +40,7 @@ class Root extends React.Component{
                 <Route exact path='/' component={App} />
                 <Route path='/register' component={Register} />
                 <Route path='/login' component={Login} />
+                <Route path='/create-blog' component={MainBlog}  />
             </Switch>
 
         );
@@ -53,7 +54,7 @@ const mapStateFromProps = state => ({
 
 const RootWithAuth = withRouter(connect(mapStateFromProps,{setUser,clearUser})(Root))
 
-ReactDOM.render( 
+ReactDOM.render(
     <Provider store={store}>
     <Router>
         <RootWithAuth />

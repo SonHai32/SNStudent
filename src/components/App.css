@@ -4,6 +4,7 @@
  
  .App {
      background: rgba(242, 242, 242, 1);
+     position: relative;
  }
  
  .register {
@@ -99,4 +100,13 @@
  
  .image-upload-limit-container {
      overflow-x: scroll
+ }
+ /* LEFTPANEL */
+ 
+ .left-panel-menu-btn-hover-scale {
+     transition: transform .3s;
+ }
+ 
+ .left-panel-menu-btn-hover-scale:hover {
+     transform: scale(0.9);
  }
