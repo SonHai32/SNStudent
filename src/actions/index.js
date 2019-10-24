@@ -15,3 +15,13 @@ export const clearUser = () => {
         type: actionTypes.CLEAR_USER,
     }
 }
+
+
+export const getPosts = posts =>{
+    return {
+        type: actionTypes.GET_POSTS,
+        payload: {
+            posts: posts
+        }
+    }
+}

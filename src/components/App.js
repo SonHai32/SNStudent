@@ -8,8 +8,8 @@ import SidePanelRight from './SidePanel/SidePanelRight'
 import NewsFeeds from './NewsFeeds/NewsFeeds'
 import MainBlog from './NewsFeeds/MainBlog'
 import Post1 from './Post/Post1'
-
-const App = ({currentUser}) =>(
+import Posts from './NewsFeeds/Posts'
+const App = ({currentUser,posts}) =>(
   <Grid style={{background : '#EDEDED'}}>
        
     <HeaderPanel />
@@ -18,16 +18,16 @@ const App = ({currentUser}) =>(
     {/* <SidePanelRight /> */}
     
       <Grid.Column  style={{width: '60%' ,marginTop: '90px', left: '50%',transform: 'translateX(-50%)'}}>
-            <Post1 />
+           <Posts posts={posts} />
       </Grid.Column>
-  
     
    
       </Grid>
 )
 
 const mapStateToProps = state =>({
-  currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
+    posts: state.posts.posts
 })
 
 export default connect(mapStateToProps)(App);

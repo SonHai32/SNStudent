@@ -3,7 +3,7 @@ import {Header, Form, Segment, Button, Dropdown, Label} from 'semantic-ui-react'
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import firebase from '../../firebase'
-
+import uuid from 'uuidv4'
 class MainBlog extends React.Component{
 
     state = {
@@ -37,6 +37,7 @@ handleSubmit = (event)=>{
         const {user,postRef} = this.state;
 
         const post = {
+            postId: uuid(),
             title: this.state.title,
             content: this.state.content,
             tags: this.state.tagsSelected.length > 0 ? this.state.tagsSelected : [],
@@ -48,7 +49,7 @@ handleSubmit = (event)=>{
             timeStamp: Math.floor(Date.now())
         }
         const savePost = async () =>{
-            const status = await postRef.push(post)
+            const status = await postRef.push().set(post)
             return status;
 
         }

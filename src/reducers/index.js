@@ -23,8 +23,28 @@ const user_reducer = (state = initialUserState, action) => {
     }
 }
 
+const initialPostsState = {
+    posts: null,
+    isLoading: true
+}
+
+const posts_reducer = (state = initialPostsState, action) =>{
+    switch(action.type){
+        case actionTypes.GET_POSTS: 
+            return{
+                posts: action.payload.posts,
+                isLoading: false
+            }
+        default: 
+            return state
+    }
+
+}
+
+
 const rootReducer = combineReducers({
-    user: user_reducer
+    user: user_reducer,
+    posts: posts_reducer
 })
 
-export default rootReducer;
+export default rootReducer
