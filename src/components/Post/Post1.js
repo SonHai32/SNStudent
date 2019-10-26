@@ -10,73 +10,38 @@ import ReactDOM from 'react-dom'
 import './style.css'
 import moment from 'moment'
 import HeaderPanel from '../Header/header'
+import PostLeftPanel from './Layouts/PostLeftPanel'
 class Post1 extends React.Component{
     state = {
-        postRef: firebase.database().ref('posts'),
-        post: ''
+        windowWidth: window.innerWidth,
+    }
+    
+    updateWidth = () =>{
+        this.setState({windowWidth: window.innerWidth})
     }
 
     componentDidMount(){
-       this.postListener()
+        window.addEventListener('resize',this.updateWidth)
     }
 
-    postListener = () =>{
-        const {postRef} = this.state;
-        
-        postRef.on('child_added', post =>{
-            this.setState({post: post.val().content})
-        })
-
-
-        
-
-        //        const result = getPost();
-        //        result.then(val =>{
-        //            this.setState({post: this.state.post.concat(val)},()=>{
-        //                console.log(this.state.post) 
-        //            })
-        //        }).catch(err=>{
-        //            console.log(err)
-        //        })
-        
-
-    } 
-
-    converter = (post) =>{
-        let container = document.getElementById('container')
-        let p = document.createElement('p')
-        let converter = new showdown.Converter();
-        let text = " ``` import React from 'react'; import ReactDOM from 'react-dom';  class PortalExample extends React.Component {   constructor (props) {     super(props);      this.nodeElement = document.getElementById('portal');   }  ``` "
-        let metadata = converter.makeHtml(post)
-        const parser = new DOMParser()
-        let a =  parser.parseFromString(metadata, 'text/html')
-
-
-
+    componentWillUnmount(){
+        window.removeEventListener('resize',this.updateWidth)
     }
-
-    constructor (props){
-        super(props);
-
-        this.nodeElement = document.getElementById('portal')
-    }
- 
-
-    
     
     render(){
-        const {post} = this.state
+        const {post,windowWidth} = this.state
         return(
             <div className='wrapper-container' >
+                {windowWidth > 1230 ?  <PostLeftPanel post={this.props.post} /> :  ''}
                 <HeaderPanel />
-                 {
+                                {
                 
                      this.props.post ? (
-                         <Segment raise  style={{width: '50%',position: 'absolute', left: '50%',top: '5%', transform: 'translate(-50%,5%)'}}  >
+                         <Segment raise  style={{width: windowWidth > 1230 ? '50%' : '95%',position: 'absolute', left: '50%',top: '80px', transform: 'translate(-50%)'}}  >
                              <div className='post-header' >
                                                             
-                                 <Header fluid as='h1' style={{color: "#008FFF"}}>
-                                     {this.props.post.title}
+                                 <Header as='h1' style={{color: "#008FFF"}}>
+                                     <strong> {this.props.post.title}</strong>
                                 </Header>
 
                                 {
