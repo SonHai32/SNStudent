@@ -1,5 +1,7 @@
 body{
-    background: #E9EBED
+    background: #FFFFFF;
+    padding:0;
+    margin: 0;
 }
 
 code{
@@ -17,7 +19,9 @@ p{
     font-size: 16px;
     
 }
-
+h2{
+    border-bottom: 1px solid rgba(0,0,0,0.1)
+}
 /*img{
     margin-left: auto;
     margin-right: auto;
@@ -32,54 +36,8 @@ p{
 .post-header{
     padding: 20px 0;
 }
-
-.flex{
-    display: flex;
-}
-.flex-row{
-    flex-direction: row
-}
-.flex-end{
-    justify-content: flex-end;
-}
-.flex-start{
-    justify-content: flex-start;
-}
-.flex-column{
-    flex-direction: column
-}
-.text-bold{
-   font-weight: bold;
-}
-
-.author-info{
-    width: 90%;
-}
-.author-stats{
-    width:50%
-}
-.author-name-follow{
-    width: 50%
-}
-.space-between{
-    justify-content: space-around;
-}
-.text-center{
-    text-align: center;
-}
-.btn-follow{
-    margin-left: 50%;
-    background: none;
-    outline:none !important;
-    border: solid 1px green;
-    border-radius: 3px  ;
-    color: #606266;
-    cursor: pointer;
-}
-
-.btn-follow:hover{
-    color: red;
-    border: solid 1px red
+.author{
+    margin-top: 20px;
 }
 .author-avatar{
     width:30px;
@@ -91,8 +49,9 @@ p{
 .author-date-created{
     line-height: 30px;
     display: inline;
-    font-weight: 200;
-    margin-left: 1%;
+    font-weight: 100;
+    font-size: 14px;
+    margin-left:1%;
     opacity: 0.5;
 }
 

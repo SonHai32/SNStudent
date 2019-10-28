@@ -11,6 +11,7 @@ import './style.css'
 import moment from 'moment'
 import HeaderPanel from '../Header/header'
 import PostLeftPanel from './Layouts/PostLeftPanel'
+import PostRightPanel from './Layouts/PostRightPanel'
 class Post1 extends React.Component{
     state = {
         windowWidth: window.innerWidth,
@@ -34,6 +35,7 @@ class Post1 extends React.Component{
             <div className='wrapper-container' >
                 {windowWidth > 1230 ?  <PostLeftPanel post={this.props.post} /> :  ''}
                 <HeaderPanel />
+                <PostRightPanel />
                                 {
                 
                      this.props.post ? (
