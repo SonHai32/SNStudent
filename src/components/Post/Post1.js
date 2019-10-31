@@ -35,7 +35,7 @@ class Post1 extends React.Component{
             <div className='wrapper-container' >
                 {windowWidth > 1230 ?  <PostLeftPanel post={this.props.post} /> :  ''}
                 <HeaderPanel />
-                <PostRightPanel />
+                <PostRightPanel post={this.props.post} />
                                 {
                 
                      this.props.post ? (

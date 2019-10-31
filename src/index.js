@@ -38,7 +38,7 @@ class Root extends React.Component{
                 return val[key]
             })
             
-            this.props.getPosts(arr)
+            this.props.getPosts(arr);
         })
     }
 
