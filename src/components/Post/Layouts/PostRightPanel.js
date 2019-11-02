@@ -15,6 +15,7 @@ class PostRightPanel extends React.Component{
     }
 
     loadComment = async ()=>{
+        
         let postKey = await  new Promise((reslove,reject) =>{
             firebase.database().ref().once('value', snap =>{
                 if(snap.hasChild('comments')){
@@ -33,33 +34,11 @@ class PostRightPanel extends React.Component{
                 })
                 reslove(comments)
             })
-            // await  this.setState({commentsText: Object.keys(a).map(key =>{
-            //  return a[key]
-            // }) }, ()=>{
-            //  console.log(this.state.comments)
-            // })       
 
         }
 
 
-        //        await firebase.database().ref().once('value', snap =>{
-        //            if(snap.hasChild('comments')){
-        //            
-        //                this.state.commentRef.orderByChild('postId').equalTo(this.props.post.postId).on('child_added', snap =>{
-        //                    postKey = snap.key; 
-        //                })
-        //            }
-        //        })
-        //        await this.state.commentRef.child(postKey).child('comments').on('child_added', snap =>{
-        //            console.log(snap.val())
-        //        })
-
-
-        // this.state.postRef.orderByChild('comments').equalTo().on('child_added', snap =>{
-        //  console.log(snap.val())        
-        // })
-    }
-        
+    } 
     commentHandleChange = event =>{
         event.preventDefault();
         this.setState({commentInput: event.target.value}); 
@@ -114,11 +93,17 @@ class PostRightPanel extends React.Component{
         }
     }
     componentDidMount(){
-        const comments = this.loadComment()
+        firebase.database().ref().on('value',snap =>{
+            const comments = this.loadComment()
         comments.then(val =>{
-            this.setState({comments: val})
+            this.setState({comments: val.sort((a,b) =>{
+                return b.timestamp - a.timestamp
+                //TODO sort comments with time
+            })})
         })
-    }
+ 
+        })
+            }
 
     
 
@@ -128,7 +113,7 @@ class PostRightPanel extends React.Component{
         return(
      
             <div className='right-panel flex flex-column space-between'>
-                <Segment raised style={{height: '100%', overflowY: 'auto'}}>
+                <Segment className='comment-box'  raised style={{height: '100%', overflowY: 'auto'}}>
                     <Header as='h3'>Bình luận</Header>
                     {
                         comments.length > 0 ?(
