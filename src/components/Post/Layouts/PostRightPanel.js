@@ -6,10 +6,10 @@ import firebase from '../../../firebase';
 import {connect} from 'react-redux' 
 class PostRightPanel extends React.Component{
     state ={
-        comments: [],
         postRef: firebase.database().ref('comments'),
         commentRef: firebase.database().ref('comments'),
-        commentText: ''
+        commentInput: '',
+        comments: []
     }
 
     loadComment = async ()=>{
@@ -24,16 +24,18 @@ class PostRightPanel extends React.Component{
         })
         if(postKey){
 
-            const a = await new Promise((reslove,reject)=>{
+            return  await new Promise((reslove,reject)=>{
                 const comments = []
                 this.state.commentRef.child(postKey).child('comments').on('child_added', snap =>{
                     comments.push(snap.val())
                 })
                 reslove(comments)
             })
-            this.setState({commentsText: a },()=>{
-                console.log(this.state.commentsText)
-            } )       
+            // await  this.setState({commentsText: Object.keys(a).map(key =>{
+            //  return a[key]
+            // }) }, ()=>{
+            //  console.log(this.state.comments)
+            // })       
 
         }
 
@@ -58,11 +60,11 @@ class PostRightPanel extends React.Component{
         
     commentHandleChange = event =>{
         event.preventDefault();
-        this.setState({commentText: event.target.value}); 
+        this.setState({commentInput: event.target.value}); 
     }
 
     commentValid = () =>{
-        if(this.state.commentText.length > 3000){
+        if(this.state.comments.length > 3000){
             return false;
         }else{
             return true;
@@ -77,7 +79,7 @@ class PostRightPanel extends React.Component{
     }
 
     sendComment = async () =>{
-        const {commentText,commentRef,comments} = this.state;
+        const {commentRef,commentInput,comments} = this.state;
     
         if(!comments.length === 0){
         
@@ -86,7 +88,7 @@ class PostRightPanel extends React.Component{
             postId: this.props.post.postId,
             comments: [
                     {
-                        text: commentText,
+                        text: commentInput,
                         byUser: this.props.currentUser.uid,
                     } 
                 ]
@@ -100,7 +102,7 @@ class PostRightPanel extends React.Component{
             })
             await commentRef.child(postKey).child('comments').push(
                 {
-                    text: commentText,
+                    text: commentInput,
                     byUser: this.props.currentUser.uid
                 }
             )
@@ -108,19 +110,23 @@ class PostRightPanel extends React.Component{
         }
     }
     componentDidMount(){
-        const a = this.loadComment()
+        const comments = this.loadComment()
+        comments.then(val =>{
+            this.setState({comments: val})
+        })
     }
 
     
 
     render(){
-        const {commentText} = this.state;
+        const {comments, commentInput} = this.state;
     
         return(
      
             <div className='right-panel flex flex-column space-between'>
-                <Segment raised style={{height: '100%'}}>
+                <Segment raised style={{height: '100%', overflowY: 'auto'}}>
                     <Header as='h3'>Bình luận</Header>
+                    
                     <Comment.Group>
                         <Comment>
                             <Comment.Avatar  as='a' src='https://react.semantic-ui.com/images/avatar/small/matt.jpg'  />
@@ -138,7 +144,7 @@ class PostRightPanel extends React.Component{
                 </Segment>
                 <Segment className='chat flex flex-row space-between'>
                     <img className='user-avatar' src='https://react.semantic-ui.com/images/avatar/small/matt.jpg'/>  
-                    <textarea value={commentText}  onChange={this.commentHandleChange} className='chat-area' placeholder='Nhập bình luận' />                     
+                    <textarea value={commentInput}  onChange={this.commentHandleChange} className='chat-area' placeholder='Nhập bình luận' />                     
                     <button onClick={this.sendComment}  className='btn-send'>
                         Gửi
                     </button>
