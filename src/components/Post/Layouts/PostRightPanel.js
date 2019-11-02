@@ -55,7 +55,11 @@ class PostRightPanel extends React.Component{
     handleSendButton = event =>{
         event.preventDefault();
         if(this.commentValid()){
-           this.sendComment();
+            try{
+                this.sendComment();
+            }catch(err){
+                console.log(err)
+            }
         }
     }
 
@@ -73,22 +77,24 @@ class PostRightPanel extends React.Component{
             comments: [
                     {
                         text: commentInput,
-                        byUser: this.props.currentUser.uid,
+                        byUser: this.props.currentUser.displayName,
+                        byUserId: this.props.currentUser.uid,
                         avatar: this.props.currentUser.photoURL,
                         timestamp: Date.now(),
                     } 
                 ]
             }
-            await firebase.database().ref().child('comments').push(comment).then(console.log('done'));
+            await firebase.database().ref().child('comments').push(comment).then(this.setState({commentInput: ''}));
             
         }else{
             await commentRef.orderByChild('postId').equalTo(this.props.post.postId).on('child_added', snap =>{
                 commentRef.child(snap.key).child('comments').push({
                     text: commentInput,
-                    byUser: this.props.currentUser.uid,
+                    byUser: this.props.currentUser.displayName,
+                    byUserId: this.props.currentUser.uid,
                     avatar: this.props.currentUser.photoURL,
                     timestamp: Date.now()
-                })
+                }).then(this.setState({commentInput: ''}))
             })
         }
     }
@@ -114,7 +120,7 @@ class PostRightPanel extends React.Component{
      
             <div className='right-panel flex flex-column space-between'>
                 <Segment className='comment-box'  raised style={{height: '100%', overflowY: 'auto'}}>
-                    <Header as='h3'>Bình luận</Header>
+                    <Header  as='h3'>Bình luận</Header>
                     {
                         comments.length > 0 ?(
                             
@@ -142,8 +148,8 @@ class PostRightPanel extends React.Component{
                     }
                                    </Segment>
                 <Segment className='chat flex flex-row space-between'>
-                    <img className='user-avatar' src='https://react.semantic-ui.com/images/avatar/small/matt.jpg'/>  
-                    <textarea value={commentInput}  onChange={this.commentHandleChange} className='chat-area' placeholder='Nhập bình luận' />                     
+                    <img className='user-avatar' src={this.props.currentUser.photoURL} />  
+                    <textarea  value={commentInput}  onChange={this.commentHandleChange} className='chat-area' placeholder='Nhập bình luận' />                     
                     <button onClick={this.sendComment}  className='btn-send'>
                         Gửi
                     </button>
