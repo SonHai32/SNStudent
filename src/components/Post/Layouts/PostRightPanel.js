@@ -4,6 +4,7 @@ import uuidv4 from 'uuid/v4'
 import "./style.css";
 import firebase from '../../../firebase';
 import {connect} from 'react-redux' 
+import moment from 'moment'
 class PostRightPanel extends React.Component{
     state ={
         postRef: firebase.database().ref('comments'),
@@ -129,23 +130,31 @@ class PostRightPanel extends React.Component{
             <div className='right-panel flex flex-column space-between'>
                 <Segment raised style={{height: '100%', overflowY: 'auto'}}>
                     <Header as='h3'>Bình luận</Header>
-                    
-                         <Comment.Group>
-                             <Comment>
-                        
-                                <Comment.Avatar  as='a'   />
-                                <Comment.Content>
-                                    <Comment.Author as='a'>Hai</Comment.Author>
-                                    <Comment.Metadata>
-                                        <span>12:03</span>
-                                    </Comment.Metadata>
-                                    <Comment.Text>
-                                    </Comment.Text>
-                                </Comment.Content>
+                    {
+                        comments.length > 0 ?(
+                            
+                                comments.map(comment => (
+                                     <Comment.Group key={`commentGroup${uuidv4()}`} >
+                                     <Comment key={`comment${uuidv4()}`} >
+                                        <Comment.Avatar key={`commentAvatar${uuidv4()}`}  as='a' src={comment.avatar} />
+                                        <Comment.Content key={`commentContent${uuidv4()}`} >
+                                            <Comment.Author as='a' key={`commentAuthor${uuidv4()}`} >{comment.byUser}</Comment.Author>
+                                            <Comment.Metadata key={`commentMeta${uuidv4()}`} >
+                                                <span key={`time${uuidv4()}`} >{moment(comment.timestamp).format('LT')}</span>
+                                            </Comment.Metadata>
+                                            <Comment.Text key={`comemntText${uuidv4()}`}  >
+                                                {comment.text}
+                                            </Comment.Text>
+                                        </Comment.Content>
 
-                            </Comment>
-                        </Comment.Group>
-        
+                                    </Comment>
+                                </Comment.Group>
+                
+                                ))
+                            
+                                   
+                        ) : ''
+                    }
                                    </Segment>
                 <Segment className='chat flex flex-row space-between'>
                     <img className='user-avatar' src='https://react.semantic-ui.com/images/avatar/small/matt.jpg'/>  
