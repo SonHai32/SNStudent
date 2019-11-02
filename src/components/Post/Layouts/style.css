@@ -172,6 +172,19 @@
     background: #ffffff;
 }
 
+.chat-area::-webkit-scrollbar{
+    -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+    background-color: #008FFF;
+    width: 2px;
+    min-height: 2px;
+}
+.comment-box::-webkit-scrollbar{
+     -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+    background-color: #008FFF;
+    width: 6px;
+    min-height: 2px;
+
+}
 .user-avatar{
     display: inline;
     width: 32px;
