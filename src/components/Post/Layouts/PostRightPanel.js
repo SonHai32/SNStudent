@@ -9,7 +9,8 @@ class PostRightPanel extends React.Component{
         postRef: firebase.database().ref('comments'),
         commentRef: firebase.database().ref('comments'),
         commentInput: '',
-        comments: []
+        comments: [],
+        
     }
 
     loadComment = async ()=>{
@@ -79,10 +80,13 @@ class PostRightPanel extends React.Component{
     }
 
     sendComment = async () =>{
-        const {commentRef,commentInput,comments} = this.state;
-    
-        if(!comments.length === 0){
-        
+        const {commentRef,commentInput} = this.state;
+        const hasComments = await new Promise((reslove,reject) =>{
+            firebase.database().ref().once('value', snap =>{
+                reslove(snap.hasChild('comments'))
+            })
+        }) 
+        if(!hasComments){
             const comment = {
             commentId: uuidv4(), 
             postId: this.props.post.postId,
@@ -90,25 +94,22 @@ class PostRightPanel extends React.Component{
                     {
                         text: commentInput,
                         byUser: this.props.currentUser.uid,
-                        avatar: this.props.currentUser.photoUrl,
+                        avatar: this.props.currentUser.photoURL,
                         timestamp: Date.now(),
                     } 
                 ]
             }
-            await firebase.database().ref('/').child('comments').push(comment).then(console.log('done'));
+            await firebase.database().ref().child('comments').push(comment).then(console.log('done'));
             
         }else{
-            let postKey;
             await commentRef.orderByChild('postId').equalTo(this.props.post.postId).on('child_added', snap =>{
-                postKey = snap.key
-            })
-            await commentRef.child(postKey).child('comments').push(
-                {
+                commentRef.child(snap.key).child('comments').push({
                     text: commentInput,
-                    byUser: this.props.currentUser.uid
-                }
-            )
-            
+                    byUser: this.props.currentUser.uid,
+                    avatar: this.props.currentUser.photoURL,
+                    timestamp: Date.now()
+                })
+            })
         }
     }
     componentDidMount(){
@@ -128,22 +129,24 @@ class PostRightPanel extends React.Component{
             <div className='right-panel flex flex-column space-between'>
                 <Segment raised style={{height: '100%', overflowY: 'auto'}}>
                     <Header as='h3'>Bình luận</Header>
+                    
+                         <Comment.Group>
+                             <Comment>
+                        
+                                <Comment.Avatar  as='a'   />
+                                <Comment.Content>
+                                    <Comment.Author as='a'>Hai</Comment.Author>
+                                    <Comment.Metadata>
+                                        <span>12:03</span>
+                                    </Comment.Metadata>
+                                    <Comment.Text>
+                                    </Comment.Text>
+                                </Comment.Content>
 
-                    <Comment.Group>
-                        <Comment>
-                            <Comment.Avatar  as='a' src='https://react.semantic-ui.com/images/avatar/small/matt.jpg'  />
-                            <Comment.Content>
-                                <Comment.Author as='a'>Hai</Comment.Author>
-                                <Comment.Metadata>
-                                    <span>12:03</span>
-                                </Comment.Metadata>
-                                <Comment.Text>
-                                </Comment.Text>
-                            </Comment.Content>
-
-                        </Comment>
-                    </Comment.Group>
-                </Segment>
+                            </Comment>
+                        </Comment.Group>
+        
+                                   </Segment>
                 <Segment className='chat flex flex-row space-between'>
                     <img className='user-avatar' src='https://react.semantic-ui.com/images/avatar/small/matt.jpg'/>  
                     <textarea value={commentInput}  onChange={this.commentHandleChange} className='chat-area' placeholder='Nhập bình luận' />                     
