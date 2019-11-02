@@ -90,6 +90,8 @@ class PostRightPanel extends React.Component{
                     {
                         text: commentInput,
                         byUser: this.props.currentUser.uid,
+                        avatar: this.props.currentUser.photoUrl,
+                        timestamp: Date.now(),
                     } 
                 ]
             }
@@ -126,7 +128,7 @@ class PostRightPanel extends React.Component{
             <div className='right-panel flex flex-column space-between'>
                 <Segment raised style={{height: '100%', overflowY: 'auto'}}>
                     <Header as='h3'>Bình luận</Header>
-                    
+
                     <Comment.Group>
                         <Comment>
                             <Comment.Avatar  as='a' src='https://react.semantic-ui.com/images/avatar/small/matt.jpg'  />
