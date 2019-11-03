@@ -15,7 +15,7 @@ import firebase from './firebase'
 import  rootReducer from './reducers'
 import {setUser, clearUser,getPosts} from './actions'
 import MainBlog from './components/NewsFeeds/MainBlog'
-import Post1 from './components/Post/Post1.js'
+import Post from './components/Post/Post.js'
 const store = createStore(rootReducer, composeWithDevTools())
 
 class Root extends React.Component{
@@ -70,7 +70,7 @@ class Root extends React.Component{
 
                 {
                     this.props.posts ? this.props.posts.map(post =>(
-                        <Route key={post.postId}  path={`/posts/${post.postId}`} render={props => <Post1 {...props} post={post} /> }  />
+                        <Route key={post.postId}  path={`/posts/${post.postId}`} render={props => <Post {...props} post={post} /> }  />
                     ))  : ''
 
                 }

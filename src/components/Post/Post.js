@@ -12,7 +12,7 @@ import moment from 'moment'
 import HeaderPanel from '../Header/header'
 import PostLeftPanel from './Layouts/PostLeftPanel'
 import PostRightPanel from './Layouts/PostRightPanel'
-class Post1 extends React.Component{
+class Post extends React.Component{
     state = {
         windowWidth: window.innerWidth,
     }
@@ -75,4 +75,4 @@ class Post1 extends React.Component{
     }
 }
 
-export default Post1
+export default Post

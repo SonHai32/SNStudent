@@ -7,7 +7,7 @@ import SidePanelLeft from './SidePanel/SidePanelLeft'
 import SidePanelRight from './SidePanel/SidePanelRight'
 import NewsFeeds from './NewsFeeds/NewsFeeds'
 import MainBlog from './NewsFeeds/MainBlog'
-import Post1 from './Post/Post1'
+import Post from './Post/Post'
 import Posts from './NewsFeeds/Posts'
 const App = ({currentUser,posts}) =>(
   <Grid style={{background : '#EDEDED'}}>
