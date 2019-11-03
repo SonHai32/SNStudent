@@ -12,7 +12,7 @@ class Posts extends React.Component{
             <Segment >
                 {
                    this.props.posts ? this.props.posts.map((post,key)=>(
-                       <div>
+                       <div key = {post.postId}>
                         <Link key={post.postId}  to={`/posts/${post.postId}`} >
                             aaaa
                         </Link>
