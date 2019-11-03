@@ -1,5 +1,5 @@
 import React from 'react';
-import {Comment,Icon,Header,Segment} from 'semantic-ui-react';
+import {Comment,Header,Segment} from 'semantic-ui-react';
 import uuidv4 from 'uuid/v4'
 import "./style.css";
 import firebase from '../../../firebase';
@@ -86,17 +86,61 @@ class PostRightPanel extends React.Component{
             }
             await firebase.database().ref().child('comments').push(comment).then(this.setState({commentInput: ''}));
             
-        }else{
+        }else{ 
+            let postId = [];
+            let comments = await new Promise((reslove,reject) =>{
+                commentRef.once('value',snap =>{
+                    reslove(snap.val())
+                })
+            })
+
+
+            comments = Object.keys(comments).map(key =>{
+                return comments[key]
+            })
+
+            comments.map(comment =>{
+                postId.push(comment.postId)
+            }) 
+
+            const postHaveComments = await postId.includes(this.props.post.postId)
+
+            //            const hasPostId = await new Promise((reslove,reject) =>{
+            //                commentRef.orderByChild('postId').on('child_added', snap =>{
+            //                    reslove(snap.val().postId === this.props.post.postId)
+            //                })
+            //            })
+
+            if(postHaveComments){
             await commentRef.orderByChild('postId').equalTo(this.props.post.postId).on('child_added', snap =>{
-                commentRef.child(snap.key).child('comments').push({
-                    text: commentInput,
-                    byUser: this.props.currentUser.displayName,
-                    byUserId: this.props.currentUser.uid,
-                    avatar: this.props.currentUser.photoURL,
-                    timestamp: Date.now()
+            commentRef.child(snap.key).child('comments').push({
+                text: commentInput,
+                byUser: this.props.currentUser.displayName,
+                byUserId: this.props.currentUser.uid,
+                avatar: this.props.currentUser.photoURL,
+                timestamp: Date.now()
                 }).then(this.setState({commentInput: ''}))
             })
-        }
+            }else{
+                await commentRef.push({
+                    commentId: uuidv4(), 
+                    postId: this.props.post.postId,
+                    comments: [
+                        {
+                            text: commentInput,
+                            byUser: this.props.currentUser.displayName,
+                            byUserId: this.props.currentUser.uid,
+                            avatar: this.props.currentUser.photoURL,
+                            timestamp: Date.now(),
+                        } 
+                    ]
+                })
+            
+            }
+        
+        
+
+                     }
     }
     componentDidMount(){
         firebase.database().ref().on('value',snap =>{
@@ -122,8 +166,7 @@ class PostRightPanel extends React.Component{
                 <Segment className='comment-box'  raised style={{height: '100%', overflowY: 'auto'}}>
                     <Header  as='h3'>Bình luận</Header>
                     {
-                        comments.length > 0 ?(
-                            
+                        comments.length > 0 ?( 
                                 comments.map(comment => (
                                      <Comment.Group key={`commentGroup${uuidv4()}`} >
                                      <Comment key={`comment${uuidv4()}`} >
@@ -140,11 +183,8 @@ class PostRightPanel extends React.Component{
 
                                     </Comment>
                                 </Comment.Group>
-                
-                                ))
-                            
-                                   
-                        ) : ''
+                                ))  
+                        ) : <Header style={{top: '40%', left: '50%', position: 'absolute', transform: 'translate(-50%,-40%)'}}  as='h3'>Chưa có bình luận nào</Header>
                     }
                                    </Segment>
                 <Segment className='chat flex flex-row space-between'>
