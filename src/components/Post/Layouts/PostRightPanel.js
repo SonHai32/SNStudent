@@ -11,6 +11,7 @@ class PostRightPanel extends React.Component{
         commentRef: firebase.database().ref('comments'),
         commentInput: '',
         comments: [],
+        commentsLoading: true,
         
     }
 
@@ -149,21 +150,31 @@ class PostRightPanel extends React.Component{
             this.setState({comments: val.sort((a,b) =>{
                 return b.timestamp - a.timestamp
                 //TODO sort comments with time
-            })})
+            })},() =>{
+                this.setState({commentsLoading: false})
+            })
+        }).catch(err =>{
+            console.log(err);
+            this.setState({commentsLoading: false})
         })
  
         })
-            }
+    }
+
+    componentWillUnmount(){
+        firebase.database().ref().off();
+        this.setState({comments: [] })
+    }
 
     
 
     render(){
-        const {comments, commentInput} = this.state;
+        const {comments, commentInput,commentsLoading} = this.state;
     
         return(
      
             <div className='right-panel flex flex-column space-between'>
-                <Segment className='comment-box'  raised style={{height: '100%', overflowY: 'auto'}}>
+                <Segment loading={commentsLoading}   className='comment-box' style={{height: '100%', overflowY: 'auto'}}>
                     <Header  as='h3'>Bình luận</Header>
                     {
                         comments.length > 0 ?( 
