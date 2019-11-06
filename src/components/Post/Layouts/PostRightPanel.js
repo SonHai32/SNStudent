@@ -106,12 +106,6 @@ class PostRightPanel extends React.Component{
 
             const postHaveComments = await postId.includes(this.props.post.postId)
 
-            //            const hasPostId = await new Promise((reslove,reject) =>{
-            //                commentRef.orderByChild('postId').on('child_added', snap =>{
-            //                    reslove(snap.val().postId === this.props.post.postId)
-            //                })
-            //            })
-
             if(postHaveComments){
             await commentRef.orderByChild('postId').equalTo(this.props.post.postId).on('child_added', snap =>{
             commentRef.child(snap.key).child('comments').push({
@@ -147,13 +141,14 @@ class PostRightPanel extends React.Component{
         firebase.database().ref().on('value',snap =>{
             const comments = this.loadComment()
         comments.then(val =>{
-            this.setState({comments: val.sort((a,b) =>{
+            this.setState
+            ({comments: val.sort((a,b) =>{
                 return b.timestamp - a.timestamp
                 //TODO sort comments with time
-            })},() =>{
-                this.setState({commentsLoading: false})
-            })
-        }).catch(err =>{
+            })})
+        }).then(
+            this.setState({commentsLoading: false}) 
+        ).catch(err =>{
             console.log(err);
             this.setState({commentsLoading: false})
         })
@@ -191,7 +186,6 @@ class PostRightPanel extends React.Component{
                                                 {comment.text}
                                             </Comment.Text>
                                         </Comment.Content>
-
                                     </Comment>
                                 </Comment.Group>
                                 ))  
