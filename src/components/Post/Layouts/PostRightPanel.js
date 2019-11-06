@@ -129,7 +129,7 @@ class PostRightPanel extends React.Component{
                             timestamp: Date.now(),
                         } 
                     ]
-                })
+                }).then(this.setState({commentInput: ''}))
             
             }
         
