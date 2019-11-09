@@ -1,12 +1,7 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import {Menu,Segment,Header,Label,Icon,Divider,Image,Button}  from 'semantic-ui-react'
-import firebase from '../../firebase'
+import {Segment,Header,Label}  from 'semantic-ui-react'
 import ReactMarkdown from 'react-markdown'
 import toc from 'remark-toc'
-import htmlParser from 'react-markdown/plugins/html-parser'
-import showdown from 'showdown'
-import ReactDOM from 'react-dom'
 import './style.css'
 import moment from 'moment'
 import HeaderPanel from '../Header/header'
@@ -63,9 +58,10 @@ class Post extends React.Component{
                                     </p>
                                 </div>
                             </div>
-
-
-                                <ReactMarkdown  source={this.props.post.content} plugins={[toc]}  /> 
+                                
+                                <div className='post-content' style={{width: '100%'}} >
+                                    <ReactMarkdown  source={this.props.post.content} plugins={[toc]}  /> 
+                                </div>
                         </Segment>
                      )  :''
 
