@@ -1,0 +1,172 @@
+.top-header{
+    width: 100%;
+    height: 6rem;
+    background-color: #525252;
+}
+
+.top-header.fixed{
+    position: fixed;
+    top: 0;
+    left: 0;
+
+}
+
+.top-header.flex{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+   /* justify-content: space-between;*/
+}
+.top-header h1 {
+    display: inline;
+}
+
+.logo{
+    cursor: pointer;
+    height: 80;
+    vertical-align: middle; 
+    padding: 0 4rem;
+
+}
+
+.logo h1{
+    color: #fff;
+    font-weight: bold;
+    font-size: 3rem;
+}
+
+.logo span{
+    color: #9D44B5;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.search-box{
+    width: 15%;
+    height: 50%;
+    background: #99B6CF;
+    outline: none;
+    opacity: .5;
+    border-radius: 20px;
+    border: none;
+    padding: 15px;
+    font-size:  1.2rem;
+    transition: width .3s ease-in-out;
+}
+
+
+.search-box::placeholder{
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-decoration: 5px;
+}
+
+.search-box:focus{
+    background: #ffffff;
+    opacity: 1;
+    color: #000000;
+    width:20%;
+}
+
+.user-nav{
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-70%,-50%);
+    height: 80%;
+}
+.user-nav.flex{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user-nav .user-avatar{
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border:none;
+    outline: none;
+    margin-right: 2px;
+}
+
+
+.user-nav .user-avatar img{
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 50%;
+}
+
+
+.user-nav .user-display-name a{
+    font-size: 1.2rem;
+    font-weight: 650;
+    color: #ffffff;
+
+}
+.user-nav .user-display-name a:hover{
+    color: #0AFFED; 
+}
+.user-nav .user-drop-down i{
+    font-size: 2.5rem;
+    color: #ffffff;
+    padding-bottom: 1.2rem;
+    padding-left: 4px;
+
+}
+
+
+.header-items {
+    height: 80%;
+    position: absolute;
+    left: 100%;
+}
+.header-items.flex{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.header-items i{
+    margin: 0 20px;
+    color: #36FFF0;
+    font-size: 2.4rem;
+    cursor: pointer;
+    transition: transform .2s ease-in-out
+}
+.header-items i:hover{
+    transform: scale(1.1)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
