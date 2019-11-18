@@ -50,7 +50,7 @@ class HeaderPanel extends React.Component{
        
 
         return(
-            <Menu fixed='top' color='black' inverted style={{height: '80px'}} >
+            <Menu fixed='top' style={{height: '80px', background: '#525252'}} >
                 <Grid columns='equal' style={{width: '100%'}}>
                     <Grid.Column verticalAlign='middle' floated='left'  >
                         <Header  inverted> <Icon name='code' color='green' /> Chat</Header>
@@ -59,7 +59,7 @@ class HeaderPanel extends React.Component{
 
                     <Label
                         as='a'
-                        color='black'
+                        color='none'
                         size='large'
                         content={currentUser.displayName}
 
@@ -70,7 +70,7 @@ class HeaderPanel extends React.Component{
                     
                     
                  
-                    <Menu compact color='black' inverted>
+                    <Menu compact>
                         <Menu.Item as='a'>
                             <Icon name='mail'/> 
                             <Label floating color='blue' size='tiny'>

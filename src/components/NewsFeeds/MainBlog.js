@@ -4,6 +4,7 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import firebase from '../../firebase'
 import uuid from 'uuidv4'
+import {connect} from 'react-redux'
 class MainBlog extends React.Component{
 
     state = {
@@ -34,8 +35,8 @@ class MainBlog extends React.Component{
 handleSubmit = (event)=>{
     event.preventDefault();
     if(this.state.title && this.state.content){
-        const {user,postRef} = this.state;
-
+        const {postRef} = this.state;
+        const user = this.props.currentUser
         const post = {
             postId: uuid(),
             title: this.state.title,
@@ -132,8 +133,7 @@ addDrowdownItem = (event,data) =>{
                         <Form.Input  transparent  required  fluid  placeholder='Đặt tiêu đề cho bài viết' onChange={this.handleTitleChange}  style={{height: '24px', fontWeight: 'bold',
                             fontSize: '20px', marginTop: '20px', marginBottom: '20px' }} />
 
-                             <Button type='submit'color='blue' size='big'  circular onClick={this.handleSubmit}  style={{marginTop: '20px', position:'fixed', top: '5%',left: '100%'
-                             ,zIndex: 1000 }}>Đăng bài
+                             <Button type='submit'color='blue' size='big'  circular onClick={this.handleSubmit} >Đăng bài
                              </Button>
 
                     </Form.Field>
@@ -166,5 +166,7 @@ addDrowdownItem = (event,data) =>{
        )
     }
 }
-
-export default MainBlog
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+})
+export default connect(mapStateToProps) (MainBlog)

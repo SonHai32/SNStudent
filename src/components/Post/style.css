@@ -1,5 +1,5 @@
 body{
-    background: #f9f9f9;
+    background: #FFFFFF;
     padding:0;
     margin: 0;
 }
@@ -22,13 +22,13 @@ p{
 h2{
     border-bottom: 1px solid rgba(0,0,0,0.1)
 }
-/*img{
+.post-content img{
     margin-left: auto;
     margin-right: auto;
     display: block;
     max-width: 100%;
     height: auto;
-}*/
+}
 *{
     font-family: "OpenSans", sans-serif;
 }

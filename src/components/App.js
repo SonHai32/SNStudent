@@ -9,20 +9,15 @@ import NewsFeeds from './NewsFeeds/NewsFeeds'
 import MainBlog from './NewsFeeds/MainBlog'
 import Post from './Post/Post'
 import Posts from './NewsFeeds/Posts'
+import MainHeader from './Header/MainHeader'
 const App = ({currentUser,posts}) =>(
-  <Grid style={{background : '#EDEDED'}}>
-       
-    <HeaderPanel />
-    <Responsive minWidth={480}>
-    </Responsive>
-    {/* <SidePanelRight /> */}
+
+    <div className='container' style={{background: '#FFFFFF'}} >
+        <MainHeader />
     
-      <Grid.Column  style={{width: '60%' ,marginTop: '90px', left: '50%',transform: 'translateX(-50%)'}}>
-           <Posts posts={posts} />
-      </Grid.Column>
-    
+        <Posts posts={posts} />
+    </div>
    
-      </Grid>
 )
 
 const mapStateToProps = state =>({

@@ -70,7 +70,8 @@ class PostRightPanel extends React.Component{
             firebase.database().ref().once('value', snap =>{
                 reslove(snap.hasChild('comments'))
             })
-        }) 
+        })
+        
         if(!hasComments){
             const comment = {
             commentId: uuidv4(), 

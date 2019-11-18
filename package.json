@@ -7,6 +7,7 @@
         "babel-loader": "^8.0.6",
         "emoji-mart": "^2.11.1",
         "firebase": "^6.4.0",
+        "highlight.js": "^9.16.2",
         "js-hash-code": "^1.0.0",
         "markdown-it": "^10.0.0",
         "md5": "^2.2.1",
@@ -54,6 +55,7 @@
         ]
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.11.2",
         "moment-locales-webpack-plugin": "^1.1.0",
         "react-fb-image-grid": "^0.1.5"
     }

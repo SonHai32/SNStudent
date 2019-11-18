@@ -1,0 +1,82 @@
+
+.wrapped{
+    width: 100%;
+    background: url('../../Images/background/background-circle.png') no-repeat 100% 50%, url('../../Images/background/pink-circle.png') no-repeat 10% 20%;
+}
+
+.blog {
+    width: 100%;
+    transform: translate(0,15%)
+    
+}
+
+.blog h2{
+    font-weight: bold;
+    color: #525252;
+    position: absolute;
+    left: 20%;
+    transform: translate(-20%,0);
+    border: 20px solid linear-gradient(to right, green, red);;
+}
+.blog-contents{
+    top:5%;
+    left: 50%;
+    position: relative;
+    transform: translate(-50% ,5%);
+    width: 60%;
+    height: 100vh;
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.blog-post{
+    padding : 0 1rem;
+    width: 25%;
+    height: 25rem;
+    border-radius: 2px;
+    padding-bottom: 1rem;
+    cursor: pointer;
+}
+
+.post-container{
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 12px 18px rgba(0,0,0,0.2);
+}
+
+.post-title{
+    height: 50%;
+    width: 100%;
+    background: #0AE8D8;
+    overflow: hidden;
+}
+.post-title h3{
+    font-size: 1.2rem;
+    padding: 1rem;
+    color: #525252;
+    outline: none;
+    border:none;
+    text-align: left;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+}
+.post-content{
+    height: 50%;
+    background: #FFFFFF;
+    overflow: hidden;
+}
+.post-content h5{
+    padding: 1rem;
+    font-weight: 500;
+}
