@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {Grid,Segment} from 'semantic-ui-react'
 import hljs from 'highlight.js'
 import showdown from 'showdown'
+import moment from 'moment'
 class Posts extends React.Component{
 
     mdParser = (md) =>{
@@ -11,8 +12,8 @@ class Posts extends React.Component{
         const reg = /\<p\>(.*?)<\/p>/g
         //let text = reg.exec(html)[1];
         let text = html.replace(/<.*?>/g,"")
-        if(text && text.length > 180){
-            text = text.slice(0, 180)
+        if(text && text.length > 600){
+            text = text.slice(0, 600)
         }
         return text +' ...';
     }
@@ -28,72 +29,57 @@ class Posts extends React.Component{
 
         return(
             
-            <div className='wrapped'>
+            <div className='main-content'>
                 {this.props.posts ?
                     (
-                    
-//                         <div class="main">
-//                             <div className='new-blog'>
-//                                 <h2>bài viết mới</h2>
-//                                 <div className="blog-contents">
-//                                     {
-//                                         this.props.posts.slice(0,8).map((post,key) =>(
-//                                             <div className="blog-post" onClick={()=>{
-//                                                 window.location.href = `/posts/${post.postId}`
-//                                             }} >
-//                                                 <div className="post-container">
-//                                                     <div className="post-title noselect">
-//                                                         <h3>  {post.title} </h3>
-//                                                         
-//                                                     </div>
-//                                                     <div className="post-content">
-//                                                         <h5>
-//                                                             {this.mdParser(post.content)}
-//                                                         </h5>
-//                                                     </div>
-//                                                 </div>    
-//                                             </div>
-//                                         ))
-//                                     }
-//                                 </div>
-//                             </div>
-//                         </div>
-                    
-                        <div className='blog'>
-                            <div className='nav-blog flex-row'>
-								
-									<li>
-                                		<h2 className='blog-title-new'> Bai Viet Moi </h2>
-									</li>
-									<li>
-                                		<h2> Bai Viet Noi Bat </h2>
-									</li>
-
-								
+                        <div className='blog-items'>
+                            <div className='blog-nav flex'>
+                                <h3>
+                                    Bài viết mới
+                                </h3>
+                                <h3>
+                                    Bài viết nổi bật
+                                </h3>
                             </div>
-                            
-                            <div className='blog-container flex-column'>
-                                {
-                                    this.props.posts.slice(0,6).map((post,key) =>(
-                                        <div className='blog-post'>
-                                            <div className='post-title'>
-                                                <h3> {post.title} </h3>
+                            {this.props.posts.map((post, key) =>(
+                                <div key={`blog-post-key-${key}`} className='blog-post flex'>
+                                    <div key={`blog-post-title-${key}`}  className='post-title'>
+                                        <h4 key={`h-key-${key}`} >
+                                            <Link to={`/posts/${post.postId}`}>{post.title}</Link>
+                                        </h4>    
+                                    </div>
+                                    <div key={`post-contents-key-${key}`} className='post-contents'>
+                                        <span>{this.mdParser(post.content)}</span>
+                                    </div>
+                                    {post.tags ? (
+                                        
+                                         <div key={`post-tagged-key-${key}`}  className='post-tagged flex'>
+                                             {post.tags.map((tag,key) =>(
+                                                <div className='tag-label'> 
+                                                    <a href={`/tags/${tag}`} >{tag}</a>   
+                                                </div>
+                                             ))}
+                                         </div>
+                                    ) : ''} 
+                                    <div key={`post-author-key-${key}`}  className='post-author flex'>
+                                        <div className='author-avatar'>
+                                            <img src={post.avatarUrl} className='circle-avatar' />
+                                        </div>
+                                        <div key={`author-post-stats-key-${key}`} className='author-post-stats flex'>
+                                            <div key={`author-post-stats-name-key-${key}`} className='author-post-stats-name'>
+                                                <a key={`user-link-key-${key}`}  href={`/users/id${post.userUID.slice(0,5)}name${post.createdBy}`}>{post.createdBy} </a>
                                             </div>
-
-                                            <div className='post-content'>
-                                                <h5>
-                                                    {this.mdParser(post.content)}
-                                                </h5>
-                                            </div>
-                                            <div className='post-author'>
-                                                sonhai
+                                            <div key={`author-post-stats-day-created-key-${key}`} className='author-post-stats-day-created'>
+                                                <span key={`day-key-${key}`}> Đã viết vào {moment(post.timestamp).format('DD/MM/YYYY')}</span>
                                             </div>
                                         </div>
-                                    ))
-                                }
-                            </div>
+
+                                    </div>
+                                    <span className='line-break' ></span>
+                                </div>
+                            ))}
+
                         </div>
-                    
                     )                
                 : ''}
             </div>

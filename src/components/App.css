@@ -29,5 +29,9 @@
      /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
  }
- 
-
+.main-content{
+    margin-top:90px;
+} 
+.circle-avatar{
+    border-radius: 50%;
+}
