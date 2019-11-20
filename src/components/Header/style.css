@@ -1,7 +1,7 @@
 .top-header{
     width: 100%;
     height: 6rem;
-    background-color: #525252;
+    background-color: #487A99;
     z-index: 1000;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .logo span{
-    color: #9D44B5;
+    color: #FF6B52;
     font-size: 2.5rem;
     font-weight: 700;
 }
@@ -108,7 +108,7 @@
 
 }
 .user-nav .user-display-name a:hover{
-    color: #0AFFED; 
+    color: #13FFDC; 
 }
 .user-nav .user-drop-down i{
     font-size: 2.5rem;
@@ -131,7 +131,7 @@
 }
 .header-items i{
     margin: 0 20px;
-    color: #36FFF0;
+    color: #13FFDC;
     font-size: 2.4rem;
     cursor: pointer;
     transition: transform .2s ease-in-out

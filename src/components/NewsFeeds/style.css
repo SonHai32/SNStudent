@@ -19,8 +19,7 @@
     padding: 0 20px;
     margin: 0;
     font-size: 1.8rem;
-    color: #1e1e1e
-}
+    color: #CC2323}
 .blog-post  {
     margin-top: 10px;
     height: 25%;
@@ -38,13 +37,15 @@
     
 .blog-post .post-title a{
     overflow: hidden;
-    color: #B5446E;
+    color:#238ACC ;
     font-size: 1.5rem;
 }
-
+.blog-post .post-title a:hover{
+	color: #FF6B52
+}
 
 .blog-post .post-contents  span{
-    color: #52;
+    color: #424242;
     font-size: 1.2rem;
     text-indent: 30px;
 }
@@ -56,7 +57,7 @@
 }
 
 .blog-post .post-tagged .tag-label{
-    background: #909090;
+    background: #9A9A9A;
     border-radius: 20px;
     padding: 5px 12px;
     margin-right: 20px;
@@ -87,8 +88,13 @@
 .blog-post .post-author .author-post-stats .author-post-stats-day-created span{
     color: rgba(0,0,0,0.5)
 }
-
-
+.blog-post .post-author .author-post-stats .author-post-stats-name a{
+	color: #FF6B52;
+	font-weight: 650;
+}
+.blog-post .post-author .author-post-stats .author-post-stats-name a:hover{
+	color:#238ACC;
+}
 
 
 
