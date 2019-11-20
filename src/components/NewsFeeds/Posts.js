@@ -4,6 +4,7 @@ import {Grid,Segment} from 'semantic-ui-react'
 import hljs from 'highlight.js'
 import showdown from 'showdown'
 import moment from 'moment'
+import MostRecentPost from './MostRecentPosts'
 class Posts extends React.Component{
 
     mdParser = (md) =>{
@@ -33,6 +34,8 @@ class Posts extends React.Component{
                 {this.props.posts ?
                     (
                         <div className='blog-items'>
+
+                            <MostRecentPost posts={this.props.posts} />
                             <div className='blog-nav flex'>
                                 <h3>
                                     Bài viết mới
@@ -45,25 +48,25 @@ class Posts extends React.Component{
                                 <div key={`blog-post-key-${key}`} className='blog-post flex'>
                                     <div key={`blog-post-title-${key}`}  className='post-title'>
                                         <h4 key={`h-key-${key}`} >
-                                            <Link to={`/posts/${post.postId}`}>{post.title}</Link>
+                                            <a href={`/posts/${post.postId}`}>{post.title}</a>
                                         </h4>    
                                     </div>
                                     <div key={`post-contents-key-${key}`} className='post-contents'>
-                                        <span>{this.mdParser(post.content)}</span>
+                                        <span key={`span-post-contents-key-${key}`}>{this.mdParser(post.content)}</span>
                                     </div>
                                     {post.tags ? (
                                         
                                          <div key={`post-tagged-key-${key}`}  className='post-tagged flex'>
                                              {post.tags.map((tag,key) =>(
-                                                <div className='tag-label'> 
-                                                    <a href={`/tags/${tag}`} >{tag}</a>   
+                                                <div key={`tag-label-key${key}`} className='tag-label'> 
+                                                    <a key={`link-tag-key-${key}`} href={`/tags/${tag}`} >{tag}</a>   
                                                 </div>
                                              ))}
                                          </div>
                                     ) : ''} 
                                     <div key={`post-author-key-${key}`}  className='post-author flex'>
-                                        <div className='author-avatar'>
-                                            <img src={post.avatarUrl} className='circle-avatar' />
+                                        <div key={`author-avatar-key-${key}`} className='author-avatar'>
+                                            <img key={`avat-img-key-${key}`} src={post.avatarUrl} className='circle-avatar' />
                                         </div>
                                         <div key={`author-post-stats-key-${key}`} className='author-post-stats flex'>
                                             <div key={`author-post-stats-name-key-${key}`} className='author-post-stats-name'>
@@ -75,11 +78,12 @@ class Posts extends React.Component{
                                         </div>
 
                                     </div>
-                                    <span className='line-break' ></span>
+                                    <span key={`line-break-key-${key}`}  className='line-break' ></span>
                                 </div>
                             ))}
 
                         </div>
+                
                     )                
                 : ''}
             </div>

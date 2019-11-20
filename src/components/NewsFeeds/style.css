@@ -47,12 +47,10 @@
 .blog-post .post-contents  span{
     color: #424242;
     font-size: 1.2rem;
-    text-indent: 30px;
 }
 
 .blog-post .post-contents{
     overflow:hidden;
-    text-indent: 20px;
     align: left;
 }
 
@@ -96,11 +94,91 @@
 	color:#238ACC;
 }
 
+/*----------------------------Most Recent Posts-------------------------------*/
+
+.recent-posts-container{
+    padding: 20px;
+    width: 20%;
+    height: 45%;
+    position: fixed;
+    top: 20%;
+    left:98%;
+    transform: translate(-98%,-20%);
+    border: 1px solid #238ACC;
+    border-radius: 20px;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between;
+}
 
 
+.recent-post-title{
+    text-align: center;
+    width: 100%;
 
+}
+.recent-posts-title span{
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 10px 20px;
+}
 
+.recent-posts-contents{
+    width: 100%;
+    padding: 0 1rem;
+}
 
+.recent-posts.contents.flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.star-icon{
+    width: 32px;
+    height: 100%;
+    text-align:center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.star-icon i{
+    color: yellow;
+    font-size: 28px;
+}
+.recent-post{
+    width: 100%;
+}
+
+.recent-post.flex{
+    display: flex;
+    flex-direction: row;
+}
+.recent-post-author{
+    padding: 0 2rem;
+}
+.recent-post-author.flex{
+    display: flex;
+    flex-direction: column
+}
+
+.recent-post-author-name a{
+    font-weight: 600;
+    color:#238ACC; 
+}
+.recent-post-title{
+
+    text-align: left;
+    padding: 0; 
+}
+.recent-post-title a{
+    font-weight: 700;
+    color: #000000
+
+}
+.recent-post-day-created{
+    color: rgba(0,0,0,0.5)
+}
 
 
 
