@@ -15,7 +15,7 @@ class PostLeftPanel extends React.Component{
                     <div className='avatar'>
                         <img className='author-img' src={post.avatarUrl} />
                     </div>   
-                    <div className='author-name text-bold blue'>   
+                    <div className='author-name text-bold'>   
                         <Link to={`/profile/${post.userUID}`} >{post.createdBy}</Link>
                     </div>
 

@@ -4,24 +4,34 @@ body{
     margin: 0;
 }
 
-code{
+.post-container code{
     background:#f7f7f7;
     font-size: 16px
 }
 
-pre{
+ .post-container pre{
     padding: 10px 10px;
     background: #f7f7f7;
     overflow-x: auto
 }
 
-p{
+ .post-container p{
     font-size: 16px;
     
 }
-h2{
+.post-container h1{
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    color: #238ACC;
+}
+
+.post-container h2{
+    color: #238ACC;
     border-bottom: 1px solid rgba(0,0,0,0.1)
 }
+
+
+
+
 .post-content img{
     margin-left: auto;
     margin-right: auto;
@@ -35,6 +45,10 @@ h2{
 
 .post-header{
     padding: 20px 0;
+}
+.post-header strong{
+    color:#FF6B52;
+    font-size: 2.8rem;
 }
 .author{
     margin-top: 20px;

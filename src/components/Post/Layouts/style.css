@@ -64,6 +64,9 @@
     height: 50px;
 
 }
+.author-name a{
+    color: #FF6B52;
+}
 .space-between{
     justify-content: space-between;
 }
@@ -103,7 +106,7 @@
 }
 .background-blue{
     opacity:0.8;
-    background-color: #008FFF;
+    background-color: #487A99;
 }
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */

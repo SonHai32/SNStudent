@@ -5,6 +5,7 @@ import toc from 'remark-toc'
 import './style.css'
 import moment from 'moment'
 import HeaderPanel from '../Header/header'
+import MainHeader from '../Header/MainHeader'
 import PostLeftPanel from './Layouts/PostLeftPanel'
 import PostRightPanel from './Layouts/PostRightPanel'
 class Post extends React.Component{
@@ -27,17 +28,17 @@ class Post extends React.Component{
     render(){
         const {post,windowWidth} = this.state
         return(
-            <div className='wrapper-container' >
+            <div className='main-container' >
+                <MainHeader />
                 {windowWidth > 1230 ?  <PostLeftPanel post={this.props.post} /> :  ''}
-                <HeaderPanel />
                 <PostRightPanel post={this.props.post} />
                                 {
                 
                      this.props.post ? (
-                         <Segment raise  style={{width: windowWidth > 1230 ? '50%' : '95%',position: 'absolute', left: '50%',top: '80px', transform: 'translate(-50%)'}}  >
+                         <Segment raise className='post-container'  style={{width: windowWidth > 1230 ? '50%' : '95%',position: 'absolute', left: '50%',top: '80px', transform: 'translate(-50%)'}}  >
                              <div className='post-header' >
                                                             
-                                 <Header as='h1' style={{color: "#008FFF"}}>
+                                 <Header as='h1'>
                                      <strong> {this.props.post.title}</strong>
                                 </Header>
 
