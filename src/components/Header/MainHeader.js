@@ -11,7 +11,7 @@ class MainHeader extends React.Component{
         return(
             <header className='top-header fixed flex'>
                 <div className='logo'>
-                    <Link to='/'><h1>Deep</h1><span>log</span></Link>
+                    <a href='/'><h1>Deep</h1><span>log</span></a>
                 </div>  
                 <input className='search-box' type='text' placeholder="Tìm kiếm" />  
                 <div className='user-nav flex'>
