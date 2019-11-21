@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import "./style.css"
+import {Link} from 'react-router-dom'
 class MainHeader extends React.Component{
     state = {
         currentUser: this.props.currentUser
@@ -24,9 +25,10 @@ class MainHeader extends React.Component{
                         <i class="fas fa-sort-down"></i>
                     </div>
                     <div className="header-items flex">
-                        <i class="fas fa-envelope"></i>
-                        <i class="fas fa-user-friends"></i>
-                        <i class="fas fa-bell"></i>
+                        <Link><i class="fas fa-envelope"></i></Link>
+                        <Link><i class="fas fa-user-friends"></i></Link>
+                        <Link to="/user/notification"><i class="fas fa-bell"></i></Link     >
+                        <Link to="/create-blog"><i class="fas fa-pen"></i> </Link>
                     </div>
                 </div>
             </header>
