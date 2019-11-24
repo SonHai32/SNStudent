@@ -42,7 +42,7 @@
     font-size: 1.5rem;
 }
 .blog-post .post-title a:hover{
-	color: #FF6B52
+	color: #487A99
 }
 
 .blog-post .post-contents  span{
@@ -93,7 +93,7 @@
 	font-weight: 650;
 }
 .blog-post .post-author .author-post-stats .author-post-stats-name a:hover{
-	color:#238ACC;
+	color: #CC2323;
 }
 
 /*----------------------------Most Recent Posts-------------------------------*/
