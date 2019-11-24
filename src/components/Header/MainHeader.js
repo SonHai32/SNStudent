@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import "./style.css"
 import {Link} from 'react-router-dom'
+import firebase from '../../firebase'
 class MainHeader extends React.Component{
     state = {
         currentUser: this.props.currentUser,
@@ -24,6 +25,11 @@ class MainHeader extends React.Component{
         }) //TODO handle body click to hide dropdown
     } 
 
+    userSignout = () =>{
+        firebase.auth().signOut().catch(err =>{
+            console.log(err);
+        })    
+    }
 
     render(){
         const {currentUser,userDropdownToggle} = this.state
@@ -47,11 +53,10 @@ class MainHeader extends React.Component{
                                 Cài đặt
                             </Link>
                         </li>
-                        <li>
-                            <Link>
-                                <i class="fas fa-sign-out-alt"></i>
+                        <li onClick={this.userSignout}>
+                            <a>   <i class="fas fa-sign-out-alt"></i>
                                 Đăng xuất
-                            </Link>
+                            </a>
                         </li>
                     </ul>
                     <div className='user-avatar'>

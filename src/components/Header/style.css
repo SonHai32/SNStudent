@@ -100,7 +100,8 @@
 }
 
 .user-nav ul li a{
-
+    font-weight: 450;
+    font-size: 1.1rem;
     color: #238ACC
 }
 .user-nav ul li i{
