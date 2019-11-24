@@ -1,6 +1,5 @@
 .blog-items{
     width: 60%;
-    height: 100vh;
     position: relative;
     left: 15%;
 }
@@ -10,6 +9,7 @@
     height: 60px;
    }
 
+   
 .blog-nav.flex{
     display: flex;
     flex-direction: row;
@@ -21,13 +21,14 @@
     font-size: 1.8rem;
     color: #CC2323}
 .blog-post  {
-    margin-top: 10px;
-    height: 25%;
+    margin-top: 30px;
+    height: 30%;
+
 }
 .blog-post .line-break{
     border-bottom: 1px solid rgba(0,0,0,0.1);
     display: block;
-    padding-bottom: 5px;
+    padding: 15px  0 ;
 }
 .blog-post.flex{
     display: flex;
@@ -47,6 +48,7 @@
 .blog-post .post-contents  span{
     color: #424242;
     font-size: 1.2rem;
+    padding: 20px 0;
 }
 
 .blog-post .post-contents{

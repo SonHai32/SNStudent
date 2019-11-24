@@ -5,6 +5,7 @@ import hljs from 'highlight.js'
 import showdown from 'showdown'
 import moment from 'moment'
 import MostRecentPost from './MostRecentPosts'
+import Footer from '../Footer/Footer'
 class Posts extends React.Component{
 
     mdParser = (md) =>{
@@ -33,6 +34,7 @@ class Posts extends React.Component{
             <div className='main-content'>
                 {this.props.posts ?
                     (
+                        
                         <div className='blog-items'>
 
                             <MostRecentPost posts={this.props.posts} />
@@ -83,10 +85,11 @@ class Posts extends React.Component{
                             ))}
 
                         </div>
-                
+
                     )                
                 : ''}
-            </div>
+        
+                           </div>
         
         )
         

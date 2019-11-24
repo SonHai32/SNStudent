@@ -9,6 +9,7 @@ import NewsFeeds from './NewsFeeds/NewsFeeds'
 import MainBlog from './NewsFeeds/MainBlog'
 import Post from './Post/Post'
 import Posts from './NewsFeeds/Posts'
+import Footer from './Footer/Footer'
 import MainHeader from './Header/MainHeader'
 const App = ({currentUser,posts}) =>(
 
@@ -16,6 +17,9 @@ const App = ({currentUser,posts}) =>(
         <MainHeader />
     
         <Posts posts={posts} />
+        
+        
+        {posts ? <Footer />: ''}
     </div>
    
 )
