@@ -4,22 +4,61 @@ import "./style.css"
 import {Link} from 'react-router-dom'
 class MainHeader extends React.Component{
     state = {
-        currentUser: this.props.currentUser
+        currentUser: this.props.currentUser,
+        userDropdownToggle: false
     }
+
+    userNavHandleClick = () =>{
+        this.setState({userDropdownToggle: !this.state.userDropdownToggle});
+    }
+    
+    componentDidMount(){
+        document.body.addEventListener('click',() =>{
+            this.setState({userDropdownToggle: false})
+        })  //TODO handle body click to hide dropdown
+    }   
+
+    componentDidMount(){
+        document.body.addEventListener('click',() =>{
+            this.setState({userDropdownToggle: false})
+        }) //TODO handle body click to hide dropdown
+    } 
+
+
     render(){
-        const {currentUser} = this.state
+        const {currentUser,userDropdownToggle} = this.state
         return(
             <header className='top-header fixed flex'>
                 <div className='logo'>
                     <a href='/'><h1>Deep</h1><span>log</span></a>
                 </div>  
                 <input className='search-box' type='text' placeholder="Tìm kiếm" />  
-                <div className='user-nav flex'>
+                <div className='user-nav flex' onClick={this.userNavHandleClick}>
+                    <ul className={!userDropdownToggle ? 'disable' : ''}>
+                        <li>
+                            <Link>
+                                <i class="fas fa-user"></i>
+                                Tài khoản
+                            </Link>
+                        </li>
+                        <li>
+                            <Link>
+                                <i class="fas fa-cog"></i>
+                                Cài đặt
+                            </Link>
+                        </li>
+                        <li>
+                            <Link>
+                                <i class="fas fa-sign-out-alt"></i>
+                                Đăng xuất
+                            </Link>
+                        </li>
+                    </ul>
                     <div className='user-avatar'>
                         <img src={currentUser.photoURL} />
                     </div>
                     <div className='user-display-name'>
-                        <a href='#'>{currentUser.displayName}</a>
+                        <span>{currentUser.displayName}</span>
                     </div>
                     <div className='user-drop-down'>
                         <i class="fas fa-sort-down"></i>
