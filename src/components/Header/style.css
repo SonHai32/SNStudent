@@ -131,13 +131,14 @@
 }
 .header-items i{
     margin: 0 20px;
-    color: #13FFDC;
+    color: #FFFFFF;
     font-size: 2.4rem;
     cursor: pointer;
     transition: transform .2s ease-in-out
 }
 .header-items i:hover{
-    transform: scale(1.1)
+    transform: scale(1.1);
+    color: #13FFDC;
 }
 
 
