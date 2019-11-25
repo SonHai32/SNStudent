@@ -16,6 +16,7 @@ import  rootReducer from './reducers'
 import {setUser, clearUser,getPosts} from './actions'
 import MainBlog from './components/NewsFeeds/MainBlog'
 import Post from './components/Post/Post.js'
+import User from './components/User/User'
 const store = createStore(rootReducer, composeWithDevTools())
 
 class Root extends React.Component{
@@ -40,11 +41,19 @@ class Root extends React.Component{
             
             this.props.getPosts(arr);
         })
+
+        const users = this.getUsersFromFirebase();
+        users.then(val =>{
+            let usersLoaded = Object.keys(val).map(key =>{
+                return val[key];
+            })
+
+            this.setState({users: usersLoaded})
+        })
     }
 
     getPostsFromFirebase = async () =>{
         const postRef = firebase.database().ref('posts')
-        const posts = []
         const postsLoaded = () =>{
             return new Promise((reslove,reject)=>{
                 postRef.once('value',posts=>{
@@ -54,8 +63,25 @@ class Root extends React.Component{
             })
         }
 
-        return await postsLoaded()
-        
+        return await postsLoaded();
+
+    }
+
+    getUsersFromFirebase = async () =>{
+        const userRef = firebase.database().ref('users');
+        const usersLoaded = () =>{
+            return new Promise((reslove,reject) =>{
+                userRef.once('value', users =>{
+                    reslove(users.val())
+                })
+            })
+        }
+        return await usersLoaded();
+    }
+
+    
+    state = {
+        users: null,
     }
 
 
@@ -74,6 +100,14 @@ class Root extends React.Component{
                     ))  : ''
 
                 }
+
+                {
+                    this.state.users ? this.state.users.map((user,key) =>(
+                        <Route key={user.uid} path={`/user/${user.uid.slice(0,5)}/${user.name}`} render={props => <User {...props} user={user} />}  />
+                        
+                    )) : ''
+                }
+
             </Switch>
 
         );
