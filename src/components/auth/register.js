@@ -56,6 +56,7 @@ class Register extends React.Component{
             avatar: createdUser.user.photoURL,
             gender: 'Male',
             phoneNumber: '',
+            uid: createdUser.user.uid
 
         })
     }
