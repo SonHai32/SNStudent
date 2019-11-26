@@ -19,7 +19,7 @@ import Post from './components/Post/Post.js'
 import User from './components/User/User'
 const store = createStore(rootReducer, composeWithDevTools())
 
-class Root extends React.Component{
+class Root extends React.Component{ 
 
     componentDidMount(){
         firebase.auth().onAuthStateChanged(user =>{

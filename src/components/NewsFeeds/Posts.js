@@ -22,11 +22,7 @@ class Posts extends React.Component{
 
     
 
-    state = {
-        posts: this.props.posts
-    }
-
-
+   
     render(){
 
         return(

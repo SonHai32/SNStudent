@@ -1,0 +1,73 @@
+.user{
+    margin-top: 80px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    
+}
+
+.line{
+    border-top: 1px solid #238ACC;
+}
+
+.user-avatar-big{
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.1)
+}
+.user-avatar-big img{
+    width: 100%;
+    border-radius: 50%;
+}
+
+.username-big{
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translate(-50%,-95%);
+}
+.username-big span{
+    font-size: 2rem;
+    font-weight: 500 
+}
+
+.stats.flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.stats-posts,.stats-followers,.stats-likes{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.stats-posts,.stats-followers{
+    border-right: 1px solid rgba(0,0,0,0.1);
+}
+
+.posts-counter-title,.followers-counter-title,.likes-counter-title{
+    font-size: 1.6rem;
+    padding: 0 1.2rem;
+    font-weight: 500;
+}
+.posts-counter,.followers-counter,.likes-counter{
+    font-size: 2rem;
+    padding: 0 1.2rem;
+    padding-top: 1.8rem;
+    font-weight: 600;
+}
+
+
+
+
+
+

@@ -19,7 +19,7 @@ class MainHeader extends React.Component{
         })  //TODO handle body click to hide dropdown
     }   
 
-    componentDidMount(){
+    componentWillUnmount(){
         document.body.addEventListener('click',() =>{
             this.setState({userDropdownToggle: false})
         }) //TODO handle body click to hide dropdown
@@ -42,10 +42,10 @@ class MainHeader extends React.Component{
                 <div className='user-nav flex' onClick={this.userNavHandleClick}>
                     <ul className={!userDropdownToggle ? 'disable' : ''}>
                         <li>
-                            <Link>
+                            <a href={`/user/${currentUser.uid.slice(0,5)}/${currentUser.displayName}`}>
                                 <i class="fas fa-user"></i>
                                 Tài khoản
-                            </Link>
+                            </a>
                         </li>
                         <li>
                             <Link>
