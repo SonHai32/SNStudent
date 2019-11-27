@@ -67,7 +67,87 @@
 }
 
 
+.user-config-container{
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,0);
+    margin-top: 5rem;
+    height: 50vh;
+}
+
+.user-config-nav h1{
+    display: inline-block;
+    color: #238ACC;
+    position: relative;
+    left: 40%;
+    transform: translate(-40%,0);
+    padding: 10px 0 ;
+}
+.user-config{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,0);
+}
+.user-config form input{
+    border-top:none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    background : #FFF;
+}
+
+.user-config form{
+    display: inline-block;
+    padding: 2rem;
+    border-radius: 10px;
+    
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.1)
+}
+
+.user-config form span{
+    font-size: 1.4rem;
+    font-weight: bold;
+
+}
 
 
+.user-config form input{
+    height: 2rem;
+    width: 400px;
+}
+.input-enable{
+    border: 1px solid rgba(0,0,0,0.1);
+}
+.input-enable:focus{        
+    border-bottom: 1px solid #238ACC;
+}
+
+.input-error{
+
+    border: 1px solid red;
+}
+.user-config-btn{
+    display: flex;
+    width : 100%;
+    justify-content: flex-end;
+    padding-top: 20px;
+}
+
+.user-config-btn button{
+    background : #238ACC;
+    color: #fff;
+    font-size: 1.2rem;
+    border:none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+}
+
+.disable{
+    display: none;
+}
 
 
