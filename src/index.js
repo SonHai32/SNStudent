@@ -103,7 +103,7 @@ class Root extends React.Component{
 
                 {
                     this.state.users ? this.state.users.map((user,key) =>(
-                        <Route key={user.uid} path={`/user/${user.uid.slice(0,5)}/${user.name}`} render={props => <User {...props} user={user} />}  />
+                        <Route key={user.uid} path={`/user/${user.uid}`} render={props => <User {...props} user={user} />}  />
                         
                     )) : ''
                 }

@@ -65,7 +65,7 @@ class MainHeader extends React.Component{
                 <div className='user-nav flex' onClick={this.userNavHandleClick}>
                     <ul className={!userDropdownToggle ? 'disable' : ''}>
                         <li>
-                            <a href={`/user/${currentUser.uid.slice(0,5)}/${this.state.userName}`}>
+                            <a href={`/user/${currentUser.uid}`}>
                                 <i class="fas fa-user"></i>
                                 Tài khoản
                             </a>

@@ -68,7 +68,7 @@ class Posts extends React.Component{
                                         </div>
                                         <div key={`author-post-stats-key-${key}`} className='author-post-stats flex'>
                                             <div key={`author-post-stats-name-key-${key}`} className='author-post-stats-name'>
-                                                <a key={`user-link-key-${key}`}  href={`/users/id${post.userUID.slice(0,5)}name${post.createdBy}`}>{post.createdBy} </a>
+                                                <a key={`user-link-key-${key}`}  href={`/users/id${post.userUID}`}>{post.createdBy} </a>
                                             </div>
                                             <div key={`author-post-stats-day-created-key-${key}`} className='author-post-stats-day-created'>
                                                 <span key={`day-key-${key}`}> Đã viết vào {moment(post.timestamp).format('DD/MM/YYYY')}</span>

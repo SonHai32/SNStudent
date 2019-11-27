@@ -3,6 +3,7 @@ import './style.css'
 import MainHeader from '../Header/MainHeader'
 import Footer from '../Footer/Footer'
 import firebase from '../../firebase'
+import {connect} from 'react-redux'
 class User extends React.Component{
     state={
             enableUserConfig: false,
@@ -158,11 +159,11 @@ class User extends React.Component{
                         </span>
                         <span className='likes-counter'>
                             1250
-            {console.log(errors)}
                         </span>
  
                     </div>
                 </div>
+            { this.props.user.uid === this.props.currentUser.uid ? (
                 <div className='user-config-container'>
                     <div className='user-config-nav'>
                         <h1>Tài khoản</h1>
@@ -239,7 +240,7 @@ class User extends React.Component{
 
                         </form>
                     </div>
-                </div>
+                </div> ) : ''}
                 {/*<div style={{position: 'absolute',top: '100%', width:'100%'}}>
                     <Footer />
                 </div>
@@ -249,4 +250,8 @@ class User extends React.Component{
     }
 }
 
-export default User
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+})
+
+export default connect(mapStateToProps)(User)

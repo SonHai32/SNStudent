@@ -17,10 +17,10 @@ class MostRecentPost extends React.Component{
                         </div>
                         <div key={`recent-post-author-key-${key}`} className='recent-post-author flex'>
                             <div key={`recent-post-author-name-key-${key}`} className='recent-post-author-name'>
-                                <Link key={`link-key-user-${key}`} to={`/users`}> {post.createdBy}</Link>
+                                <a key={`link-key-user-${key}`} href={`/user/${post.userUID}`}> {post.createdBy}</a>
                             </div>
                             <div key={`recent-post-title-key-${key}`} className='recent-post-title'>
-                                <Link key={`link-to-post-key-${key}`} to={`/posts/${post.postId}`}>{post.title}</Link>
+                                <a key={`link-to-post-key-${key}`} href={`/posts/${post.postId}`}>{post.title}</a>
                             </div>
                             <div key={`recent-post-day-key-${key}`} className='recent-post-day-created'>
                                 {moment(post.timestamp).format("DD/MM/YYYY")}      
