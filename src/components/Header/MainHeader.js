@@ -6,7 +6,25 @@ import firebase from '../../firebase'
 class MainHeader extends React.Component{
     state = {
         currentUser: this.props.currentUser,
-        userDropdownToggle: false
+        userDropdownToggle: false,
+        userName: ''
+    }
+
+    loadUserName = () =>{
+        const userRef = firebase.database().ref('users');
+        let userKey = new Promise((reslove,reject) =>{
+            userRef.orderByChild('uid').equalTo(this.props.currentUser.uid).on('child_added',snap =>{
+                reslove(snap.key)
+            })
+        })
+
+        userKey.then(key =>{
+            userRef.child(key).once('value',snap =>{
+                this.setState({userName: snap.val().name})
+            })
+        })
+
+
     }
 
     userNavHandleClick = () =>{
@@ -14,12 +32,17 @@ class MainHeader extends React.Component{
     }
     
     componentDidMount(){
+        
+        this.loadUserName()
+
         document.body.addEventListener('click',() =>{
             this.setState({userDropdownToggle: false})
         })  //TODO handle body click to hide dropdown
     }   
 
     componentWillUnmount(){
+       
+        this.loadUserName()
         document.body.addEventListener('click',() =>{
             this.setState({userDropdownToggle: false})
         }) //TODO handle body click to hide dropdown
@@ -42,7 +65,7 @@ class MainHeader extends React.Component{
                 <div className='user-nav flex' onClick={this.userNavHandleClick}>
                     <ul className={!userDropdownToggle ? 'disable' : ''}>
                         <li>
-                            <a href={`/user/${currentUser.uid.slice(0,5)}/${currentUser.displayName}`}>
+                            <a href={`/user/${currentUser.uid.slice(0,5)}/${this.state.userName}`}>
                                 <i class="fas fa-user"></i>
                                 Tài khoản
                             </a>
@@ -63,7 +86,7 @@ class MainHeader extends React.Component{
                         <img src={currentUser.photoURL} />
                     </div>
                     <div className='user-display-name'>
-                        <span>{currentUser.displayName}</span>
+                        <span>{this.state.userName}</span>
                     </div>
                     <div className='user-drop-down'>
                         <i class="fas fa-sort-down"></i>
